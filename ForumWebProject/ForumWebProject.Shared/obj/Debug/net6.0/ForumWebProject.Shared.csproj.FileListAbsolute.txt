@@ -1,0 +1,12 @@
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Shared\bin\Debug\net6.0\ForumWebProject.Shared.deps.json
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Shared\bin\Debug\net6.0\ForumWebProject.Shared.dll
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Shared\bin\Debug\net6.0\ForumWebProject.Shared.pdb
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Shared\obj\Debug\net6.0\ForumWebProject.Shared.csproj.AssemblyReference.cache
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Shared\obj\Debug\net6.0\ForumWebProject.Shared.GeneratedMSBuildEditorConfig.editorconfig
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Shared\obj\Debug\net6.0\ForumWebProject.Shared.AssemblyInfoInputs.cache
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Shared\obj\Debug\net6.0\ForumWebProject.Shared.AssemblyInfo.cs
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Shared\obj\Debug\net6.0\ForumWebProject.Shared.csproj.CoreCompileInputs.cache
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Shared\obj\Debug\net6.0\ForumWebProject.Shared.dll
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Shared\obj\Debug\net6.0\refint\ForumWebProject.Shared.dll
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Shared\obj\Debug\net6.0\ForumWebProject.Shared.pdb
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Shared\obj\Debug\net6.0\ref\ForumWebProject.Shared.dll
