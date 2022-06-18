@@ -35,7 +35,7 @@ namespace ForumWebProject.Application.Services.Implementations
             return categoriesViews;
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategoriesByParentIdAsync(Guid id)
+        public async Task<IEnumerable<CategoryView>> GetAllCategoriesByParentIdAsync(Guid id)
         {
             var categories = await _categoryRepository.GetByParentIdAsync(id);
 
@@ -44,7 +44,43 @@ namespace ForumWebProject.Application.Services.Implementations
                 throw new NotImplementedException(nameof(categories));
             }
 
-            return categories;
+            var categoriesViews = categories.Adapt<IEnumerable<CategoryView>>();
+
+            return categoriesViews;
+        }
+
+        public async Task<CategoryView> GetCategoryByIdAsync(Guid id)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id);
+
+            if (category is null)
+            {
+                throw new NotImplementedException(nameof(category));
+            }
+
+            var categoryView = category.Adapt<CategoryView>();
+
+            return categoryView;
+        }
+
+        public Task<CategoryView> AddCategoryAsync(CategoryView entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteCategoryAsync(CategoryView entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteByCategoryIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateCategoryAsync(CategoryView entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

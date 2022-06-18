@@ -1,6 +1,6 @@
 ﻿using ForumWebProject.Infrastructure.Identity;
 using ForumWebProject.Infrastructure.Repositories.Interfaces;
-using ForumWebProject.Shared.Authorization;
+using ForumWebProject.Shared.Authorization.Permissions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,36 +9,50 @@ namespace ForumWebProject.Infrastructure.Initialization.Seeders;
 public class RoleSeeder : ICustomSeeder
 {
     private readonly RoleManager<Role> _roleManager;
-    private readonly IRoleClaimRepository _roleClaimRepository;
+    private readonly IPermissionRepository _permissionRepository;
 
-    public RoleSeeder(RoleManager<Role> roleManager, IRoleClaimRepository roleClaimRepository)
+    public RoleSeeder(RoleManager<Role> roleManager, IPermissionRepository permissionRepository)
     {
         _roleManager = roleManager;
-        _roleClaimRepository = roleClaimRepository;
+        _permissionRepository = permissionRepository;
     }
 
     public async Task InitializeAsync(CancellationToken cancellationToken)
     {
-        foreach (var roleName in ForumRoles.DefaultRoles)
+        await AddRoleWithPermissionsAsync(new Role(ForumRoles.Admin, "Admin"), ForumPermissions.Admin, cancellationToken);
+        await AddRoleWithPermissionsAsync(new Role(ForumRoles.User, "User"), ForumPermissions.User, cancellationToken);
+    }
+
+    private async Task AddRoleWithPermissionsAsync(Role roleToAdd, IReadOnlyCollection<ForumPermission> permissions, CancellationToken cancellationToken)
+    {
+        if (await _roleManager.Roles.SingleOrDefaultAsync(r => r.Name == roleToAdd.Name, cancellationToken) is not Role
+            role)
         {
-            if (await _roleManager.Roles.SingleOrDefaultAsync(r => r.Name == roleName, cancellationToken) is not Role role)
+            role = roleToAdd;
+            var result = await _roleManager.CreateAsync(role);
+        }
+
+        var permissionsFromRole = (await _permissionRepository.GetByRoleIdAsync(role.Id, cancellationToken)).ToList();
+        foreach (var permission in permissions)
+        {
+            var permissionName = ForumPermission.ToName(permission.Action, permission.Resource);
+
+            if (permissionsFromRole.Any(p => p.Name == permissionName))
             {
-                role = new Role(roleName, $"{roleName} role.");
-                var result = await _roleManager.CreateAsync(role);
+                continue;
             }
 
-            var tempPermission = "Permission.Categories.Read";
-
-            var roleClaims = await _roleManager.GetClaimsAsync(role);
-            if (!roleClaims.Any(rc => rc.Type == ForumClaims.Permission && rc.Value == tempPermission))
+            if (await _permissionRepository.GetByNameAsync(permissionName, cancellationToken) is not Permission
+                existingPermission)
             {
-                await _roleClaimRepository.AddAsync(new RoleClaim()
+                existingPermission = await _permissionRepository.AddAsync(new Permission()
                 {
-                    RoleId = role.Id,
-                    ClaimType = ForumClaims.Permission,
-                    ClaimValue = tempPermission
+                  Name = permissionName,
+                  Description = permission.Description
                 });
             }
+
+            await _permissionRepository.GrantToRole(existingPermission.Id, role.Id, cancellationToken);
         }
     }
 }

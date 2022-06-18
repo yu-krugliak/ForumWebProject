@@ -11,6 +11,8 @@ namespace ForumWebProject.Infrastructure.Identity
     {
         public string? Description { get; set; }
 
+        public virtual ICollection<RolePermission>? RolePermissions { get; set; }
+
         public Role(string name, string? description = null)
         {
             Description = description;

@@ -12,11 +12,11 @@ namespace ForumWebProject.Infrastructure.Repositories.Implementations
 {
     internal class UserRepository : RepositoryBase<User>, IUserRepository
     {
-        private readonly ForumContext _context;
+        private readonly ForumContext _forumContext;
 
-        public UserRepository(ForumContext context) : base(context)
+        public UserRepository(ForumContext forumContext) : base(forumContext)
         {
-            _context = context;
+            _forumContext = forumContext;
         }
     }
 }

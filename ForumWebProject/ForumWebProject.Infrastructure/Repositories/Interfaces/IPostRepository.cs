@@ -4,7 +4,7 @@ namespace ForumWebProject.Infrastructure.Repositories.Interfaces
 {
     public interface IPostRepository : IRepository<Post>
     {
-        Task<IEnumerable<Post>> GetByTopicId();
-        Task<IEnumerable<Post>> GetByUserId();
+        Task<IEnumerable<Post>> GetByTopicId(Guid topicId);
+        Task<IEnumerable<Post>> GetByUserId(Guid userId);
     }
 }

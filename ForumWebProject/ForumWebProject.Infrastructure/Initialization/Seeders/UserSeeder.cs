@@ -18,20 +18,21 @@ public class UserSeeder : ICustomSeeder
 
     public async Task InitializeAsync(CancellationToken cancellationToken)
     {
-        _forumContext.Users.AddRange(new[]
+        var user = new User()
         {
-            new User()
-            {
-                Id = Guid.Parse("45fcee09-808d-42aa-a49e-985ceceaf9c9"),
-                FirstName = "Sad",
-                LastName = "Pepe"
-            }
-        });
-
-        await _forumContext.SaveChangesAsync(cancellationToken);
+            Id = Guid.Parse("45fcee09-808d-42aa-a49e-985ceceaf9c9"),
+            Email = "u@u.com",
+            FirstName = "Sad",
+            LastName = "Pepe",
+            UserName = "username",
+            NormalizedEmail = "u@u.com".ToUpperInvariant(),
+            NormalizedUserName = "username".ToUpperInvariant()
+        };
+        await AddUser(user, "1111", ForumRoles.User);
 
         var adminUser = new User()
         {
+            Id = Guid.Parse("fca6323b-3f0a-49f8-a297-61867db6bdb6"),
             FirstName = "Pepe",
             LastName = "Pepegovich",
             Email = "sadpepe@gmail.com",
@@ -39,10 +40,15 @@ public class UserSeeder : ICustomSeeder
             NormalizedEmail = "sadpepe@gmail.com".ToUpperInvariant(),
             NormalizedUserName = "admin007".ToUpperInvariant()
         };
+        await AddUser(adminUser, "secure", ForumRoles.Admin);
+    }
 
+    private async Task AddUser(User user, string password, string role)
+    {
         var hasher = new PasswordHasher<User>();
-        adminUser.PasswordHash = hasher.HashPassword(adminUser, "123456");
-        var result =  await _userManager.CreateAsync(adminUser);
-        var result1 = await _userManager.AddToRoleAsync(adminUser, ForumRoles.Admin);
+        user.PasswordHash = hasher.HashPassword(user, password);
+
+        var result = await _userManager.CreateAsync(user);
+        var result1 = await _userManager.AddToRoleAsync(user, role);
     }
 }

@@ -40,7 +40,9 @@ public static class Startup
         return services
             .AddTransient<ICategoryService, CategoryService>()
             .AddTransient<IUserService, UserService>()
-            .AddTransient<ITokenService, TokenService>();
+            .AddTransient<ITokenService, TokenService>()
+            .AddTransient<IRoleService, RoleService>()
+            .AddTransient<IPermissionService, PermissionService>();
     }
 
     public static IServiceCollection AddIdentity(this IServiceCollection services)

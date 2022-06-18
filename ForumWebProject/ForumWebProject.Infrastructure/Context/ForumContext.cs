@@ -18,7 +18,8 @@ namespace ForumWebProject.Infrastructure.Context
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<RolePermission> RolePermissions { get; set; }
 
 
         public ForumContext(DbContextOptions<ForumContext> options) : base(options)

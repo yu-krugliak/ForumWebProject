@@ -12,13 +12,13 @@ public class UserService : IUserService
 {
     private readonly UserManager<User> _userManager;
     private readonly RoleManager<Role> _roleManager;
-    private readonly IRoleClaimRepository _roleClaimRepository;
+    private readonly IPermissionRepository _permissionRepository;
 
-    public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IRoleClaimRepository roleClaimRepository)
+    public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IPermissionRepository permissionRepository)
     {
         _userManager = userManager;
         _roleManager = roleManager;
-        _roleClaimRepository = roleClaimRepository;
+        _permissionRepository = permissionRepository;
     }
 
     public async Task<List<string>> GetPermissionsAsync(string userId, CancellationToken cancellationToken = default)
@@ -32,8 +32,8 @@ public class UserService : IUserService
         var permissions = new List<string>();
         foreach (var role in roles)
         {
-            var claimsByRoleId = await _roleClaimRepository.GetByRoleIdAsync(role.Id, cancellationToken);
-            permissions.AddRange(claimsByRoleId.Where(rc => rc.ClaimType == ForumClaims.Permission).Select(rc => rc.ClaimValue).ToList());
+            var permissionsByRoleId = await _permissionRepository.GetByRoleIdAsync(role.Id, cancellationToken);
+            permissions.AddRange(permissionsByRoleId.Select(p => p.Name!).ToList());
         }
 
         return permissions.Distinct().ToList();

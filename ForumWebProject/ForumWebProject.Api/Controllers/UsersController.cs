@@ -1,5 +1,7 @@
-﻿using ForumWebProject.Application.Models;
+﻿using ForumWebProject.Application.Auth.Permissions;
+using ForumWebProject.Application.Models;
 using ForumWebProject.Application.Services.Interfaces;
+using ForumWebProject.Shared.Authorization.Permissions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForumWebProject.Api.Controllers;
@@ -17,6 +19,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
+    [MustHavePermission(ForumAction.Read, ForumResource.Users)]
     public async Task<IActionResult> Register([FromBody]RegisterRequest request)
     {
         await _userService.RegisterAsync(request);
