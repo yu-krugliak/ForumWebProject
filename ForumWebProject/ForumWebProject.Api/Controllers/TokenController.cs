@@ -1,5 +1,4 @@
-﻿using ForumWebProject.Application.Auth.Permissions;
-using ForumWebProject.Application.Models;
+﻿using ForumWebProject.Application.Models;
 using ForumWebProject.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

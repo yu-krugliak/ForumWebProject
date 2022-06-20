@@ -1,5 +1,4 @@
 ﻿using ForumWebProject.Infrastructure.Context;
-using ForumWebProject.Infrastructure.Entities;
 using ForumWebProject.Infrastructure.Identity;
 using ForumWebProject.Infrastructure.Initialization.Seeders;
 using ForumWebProject.Infrastructure.Repositories.Interfaces;
@@ -12,7 +11,6 @@ public class ForumContextSeeder
     private readonly SeederRunner _seederRunner;
     private readonly UserManager<User> _userManager;
     private readonly RoleManager<Role> _roleManager;
-    private readonly IRoleClaimRepository _roleClaimRepository;
     private readonly IPermissionRepository _permissionRepository;
     private readonly ForumContext _context;
 

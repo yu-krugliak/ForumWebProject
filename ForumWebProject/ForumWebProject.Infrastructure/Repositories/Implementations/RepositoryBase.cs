@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ForumWebProject.Infrastructure.Context;
+﻿using ForumWebProject.Infrastructure.Entities;
 using ForumWebProject.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace ForumWebProject.Infrastructure.Repositories.Implementations
 {
-    public abstract class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class
+    public abstract class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class, IEntity<Guid>
     {
         private readonly DbContext _forumContext;
 
@@ -20,16 +15,21 @@ namespace ForumWebProject.Infrastructure.Repositories.Implementations
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _forumContext.Set<TEntity>().ToListAsync();
+            return await _forumContext.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
-        public async Task<TEntity?> GetByIdAsync(Guid id)
+        public virtual async Task<TEntity?> GetByIdAsync(Guid id)
         {
-            return await  _forumContext.Set<TEntity>()
+            return await _forumContext.Set<TEntity>()
                 .FindAsync(id);
         }
 
-        public async Task<TEntity> AddAsync(TEntity entity)
+        public virtual async Task<bool> ExistsAsync(Guid id)
+        {
+            return await _forumContext.Set<TEntity>().AnyAsync(e => e.Id == id);
+        }
+
+        public virtual async Task<TEntity> AddAsync(TEntity entity)
         {
             _forumContext.Set<TEntity>().Add(entity);
             await _forumContext.SaveChangesAsync();
@@ -37,7 +37,7 @@ namespace ForumWebProject.Infrastructure.Repositories.Implementations
             return entity;
         }
 
-        public async Task<bool> DeleteAsync(TEntity entity)
+        public virtual async Task<bool> DeleteAsync(TEntity entity)
         {
             _forumContext.Set<TEntity>().Remove(entity);
             await _forumContext.SaveChangesAsync();
@@ -45,7 +45,7 @@ namespace ForumWebProject.Infrastructure.Repositories.Implementations
             return true;
         }
 
-        public async Task<bool> DeleteByIdAsync(Guid id)
+        public virtual async Task<bool> DeleteByIdAsync(Guid id)
         {
             var record = await _forumContext.Set<TEntity>().FindAsync(id);
 
@@ -60,7 +60,7 @@ namespace ForumWebProject.Infrastructure.Repositories.Implementations
             return true;
         }
 
-        public async Task<bool> UpdateAsync(TEntity entity)
+        public virtual async Task<bool> UpdateAsync(TEntity entity)
         {
             _forumContext.Set<TEntity>().Update(entity);
             await _forumContext.SaveChangesAsync();

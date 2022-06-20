@@ -3,8 +3,6 @@ using ForumWebProject.Application.Exceptions;
 using ForumWebProject.Application.Models;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Infrastructure.Identity;
-using ForumWebProject.Infrastructure.Repositories.Interfaces;
-using ForumWebProject.Shared.Authorization;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

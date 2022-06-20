@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "JnQmjmU2PAXq0P9uV6AVVlR5B2rbv4CZ1qtVUpOCaLkBTqNwLrujOHyf7GfzilA/20P9HIdFp6xp+gUqyp9LUw==",
+  "dgSpecHash": "Fhrt9R14zPEVH1mONLHYtKPgRGBi3E5g5XPcnhW8YazZq5TlA8zMCG/DGfoDTJaeoXgbIacLqDt9rwVsMpcnvA==",
   "success": true,
   "projectFilePath": "D:\\EPAM\\ForumWebProject\\ForumWebProject\\ForumWebProject.Application\\ForumWebProject.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation\\10.4.0\\fluentvalidation.10.4.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.4.0\\fluentvalidation.dependencyinjectionextensions.10.4.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mapster\\7.3.0\\mapster.7.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mapster.core\\1.2.0\\mapster.core.1.2.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mapster.dependencyinjection\\1.0.0\\mapster.dependencyinjection.1.0.0.nupkg.sha512",

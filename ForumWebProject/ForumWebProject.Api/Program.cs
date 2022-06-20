@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using FluentValidation.AspNetCore;
 using ForumWebProject.Application;
 using ForumWebProject.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -7,9 +8,11 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers().AddJsonOptions(options =>
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
-);
+builder.Services.AddControllers()
+    .AddFluentValidation()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+    );
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

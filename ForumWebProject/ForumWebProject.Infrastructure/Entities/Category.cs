@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ForumWebProject.Infrastructure.Entities
+﻿namespace ForumWebProject.Infrastructure.Entities
 {
-    public class Category
+    public class Category : IEntity<Guid>
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }

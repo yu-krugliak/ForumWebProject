@@ -1,10 +1,13 @@
-﻿namespace ForumWebProject.Infrastructure.Repositories.Interfaces
+﻿using ForumWebProject.Infrastructure.Entities;
+
+namespace ForumWebProject.Infrastructure.Repositories.Interfaces
 {
-    public interface IRepository<TEntity>
+    public interface IRepository<TEntity> where TEntity : class, IEntity<Guid>
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
 
         Task<TEntity?> GetByIdAsync(Guid id);
+        Task<bool> ExistsAsync(Guid id);
 
         Task<TEntity> AddAsync(TEntity entity);
 

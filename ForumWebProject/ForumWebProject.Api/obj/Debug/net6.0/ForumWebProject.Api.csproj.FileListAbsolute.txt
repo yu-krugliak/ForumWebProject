@@ -69,3 +69,6 @@ D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\Mic
 D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\System.Security.Permissions.dll
 D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\ForumWebProject.Shared.dll
 D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\ForumWebProject.Shared.pdb
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\FluentValidation.dll
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll

@@ -3,17 +3,16 @@ using ForumWebProject.Infrastructure.Entities;
 
 namespace ForumWebProject.Application.Services.Interfaces;
 
-public interface ICategoryService
+public interface ICategoryService : IService<Category>
 {
     Task<IEnumerable<CategoryView>> GetAllCategoriesAsync();
-    Task<IEnumerable<CategoryView>> GetAllCategoriesByParentIdAsync(Guid id);
+    Task<IEnumerable<CategoryView>> GetAllCategoriesByParentIdAsync(Guid parentCategoryId);
 
-    Task<CategoryView> GetCategoryByIdAsync(Guid id);
-    Task<CategoryView> AddCategoryAsync(CategoryView entity);
+    Task<CategoryView> GetCategoryByIdAsync(Guid categoryId);
+    Task<CategoryView> AddCategoryAsync(CategoryRequest categoryRequest);
 
-    Task<bool> DeleteCategoryAsync(CategoryView entity);
+    Task DeleteCategoryAsync(Guid categoryId, CategoryRequest categoryRequest);
+    Task DeleteByCategoryIdAsync(Guid categoryId);
 
-    Task<bool> DeleteByCategoryIdAsync(Guid id);
-
-    Task<bool> UpdateCategoryAsync(CategoryView entity);
+    Task UpdateCategoryAsync(Guid categoryId, CategoryRequest categoryRequest);
 }

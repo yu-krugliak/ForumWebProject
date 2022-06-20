@@ -1,9 +1,5 @@
 ﻿using ForumWebProject.Application.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ForumWebProject.Application.Exceptions;
 using ForumWebProject.Application.Models;
 using ForumWebProject.Infrastructure.Entities;
 using ForumWebProject.Infrastructure.Repositories.Interfaces;
@@ -12,11 +8,11 @@ using Mapster;
 namespace ForumWebProject.Application.Services.Implementations
 {
 
-    public class CategoryService : ICategoryService
+    public class CategoryService : ServiceBase<Category>, ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository) : base(categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
@@ -27,7 +23,7 @@ namespace ForumWebProject.Application.Services.Implementations
 
             if (categories is null)
             {
-                throw new NotImplementedException(nameof(categories));
+                throw new NotFoundException("Categories not found.");
             }
 
             var categoriesViews = categories.Adapt<IEnumerable<CategoryView>>();
@@ -35,13 +31,13 @@ namespace ForumWebProject.Application.Services.Implementations
             return categoriesViews;
         }
 
-        public async Task<IEnumerable<CategoryView>> GetAllCategoriesByParentIdAsync(Guid id)
+        public async Task<IEnumerable<CategoryView>> GetAllCategoriesByParentIdAsync(Guid parentCategoryId)
         {
-            var categories = await _categoryRepository.GetByParentIdAsync(id);
+            var categories = await _categoryRepository.GetByParentIdAsync(parentCategoryId);
 
             if (categories is null)
             {
-                throw new NotImplementedException(nameof(categories));
+                throw new NotFoundException("Categories in this parent category not found.");
             }
 
             var categoriesViews = categories.Adapt<IEnumerable<CategoryView>>();
@@ -49,38 +45,68 @@ namespace ForumWebProject.Application.Services.Implementations
             return categoriesViews;
         }
 
-        public async Task<CategoryView> GetCategoryByIdAsync(Guid id)
+        public async Task<CategoryView> GetCategoryByIdAsync(Guid categoryId)
         {
-            var category = await _categoryRepository.GetByIdAsync(id);
-
-            if (category is null)
-            {
-                throw new NotImplementedException(nameof(category));
-            }
+            var category = await GetExistingEntityById(categoryId);
 
             var categoryView = category.Adapt<CategoryView>();
 
             return categoryView;
         }
 
-        public Task<CategoryView> AddCategoryAsync(CategoryView entity)
+        public async Task<CategoryView> AddCategoryAsync(CategoryRequest categoryRequest)
         {
-            throw new NotImplementedException();
+            var category = categoryRequest.Adapt<Category>();
+            
+            if (await _categoryRepository.GetByNameAsync(category.Name!) is not null)
+            {
+                throw new ConflictException("Category already exists.");
+            }
+
+            var addedCategory = await _categoryRepository.AddAsync(category);
+
+            if (addedCategory is null)
+            {
+                throw new ServerErrorException("Can't add this category.", null);
+            }
+
+            return addedCategory.Adapt<CategoryView>();
         }
 
-        public Task<bool> DeleteCategoryAsync(CategoryView entity)
+        public async Task DeleteCategoryAsync(Guid categoryId, CategoryRequest categoryRequest)
         {
-            throw new NotImplementedException();
+            var category = await GetExistingEntityById(categoryId);
+            categoryRequest.Adapt(category);
+
+            var result = await _categoryRepository.DeleteAsync(category);
+
+            if (!result)
+            {
+                throw new ServerErrorException("Can't delete this category.", null);
+            }
         }
 
-        public Task<bool> DeleteByCategoryIdAsync(Guid id)
+        public async Task DeleteByCategoryIdAsync(Guid categoryId)
         {
-            throw new NotImplementedException();
+            var result = await _categoryRepository.DeleteByIdAsync(categoryId);
+
+            if (!result)
+            {
+                throw new ServerErrorException("Can't delete this category.", null);
+            }
         }
 
-        public Task<bool> UpdateCategoryAsync(CategoryView entity)
+        public async Task UpdateCategoryAsync(Guid categoryId, CategoryRequest categoryRequest)
         {
-            throw new NotImplementedException();
+            var category = await GetExistingEntityById(categoryId);
+            categoryRequest.Adapt(category);
+
+            var result = await _categoryRepository.UpdateAsync(category);
+
+            if (!result)
+            {
+                throw new ServerErrorException("Can't update this category.", null);
+            }
         }
     }
 }

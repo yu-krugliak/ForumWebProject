@@ -1,6 +1,8 @@
-﻿using ForumWebProject.Application.Auth.Jwt;
+﻿using FluentValidation;
+using ForumWebProject.Application.Auth.Jwt;
 using ForumWebProject.Application.Auth.Permissions;
 using ForumWebProject.Application.Middleware;
+using ForumWebProject.Application.Models.Validators;
 using ForumWebProject.Application.Services.Implementations;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Infrastructure.Context;
@@ -24,7 +26,8 @@ public static class Startup
             .AddJwtAuth()
             .AddPermissions()
             .AddTransient<ExceptionHandlingMiddleware>()
-            .AddMapster();
+            .AddMapster()
+            .AddValidatorsFromAssemblyContaining<CategoryRequestValidator>();
     }
 
     public static IApplicationBuilder UseApplication(this IApplicationBuilder builder)

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "yUeOxQXGGxz+L9UjDD4+4ymDQ9TAhDtWf0ygJEOMxqXO2WbQNzUAIVL73UsN/ejkTmPFtaR3hXGK0Tg7vCFyOw==",
+  "dgSpecHash": "DwwBXnbCi1sU4AAwyb5O9wpgNn64pfKC/JYYNOVO9M1ONfaNs4/uwdkixmuYNEKuXg66qBRyBpwchDRCuG45mg==",
   "success": true,
   "projectFilePath": "D:\\EPAM\\ForumWebProject\\ForumWebProject\\ForumWebProject.Api\\ForumWebProject.Api.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,9 @@
     "C:\\Users\\user\\.nuget\\packages\\azure.security.keyvault.certificates\\4.1.0\\azure.security.keyvault.certificates.4.1.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\azure.security.keyvault.secrets\\4.1.0\\azure.security.keyvault.secrets.4.1.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation\\10.4.0\\fluentvalidation.10.4.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation.aspnetcore\\10.4.0\\fluentvalidation.aspnetcore.10.4.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.4.0\\fluentvalidation.dependencyinjectionextensions.10.4.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mapster\\7.3.0\\mapster.7.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mapster.core\\1.2.0\\mapster.core.1.2.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mapster.dependencyinjection\\1.0.0\\mapster.dependencyinjection.1.0.0.nupkg.sha512",

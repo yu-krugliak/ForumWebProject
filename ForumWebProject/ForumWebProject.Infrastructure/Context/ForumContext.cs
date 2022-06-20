@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using ForumWebProject.Infrastructure.Context.Configurations;
-using ForumWebProject.Infrastructure.Entities;
+﻿using ForumWebProject.Infrastructure.Entities;
 using ForumWebProject.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

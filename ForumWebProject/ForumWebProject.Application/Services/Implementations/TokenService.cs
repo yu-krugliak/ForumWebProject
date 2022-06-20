@@ -1,7 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ForumWebProject.Application.Auth;
 using ForumWebProject.Application.Auth.Jwt;
 using ForumWebProject.Application.Exceptions;
 using ForumWebProject.Application.Models;

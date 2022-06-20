@@ -2,6 +2,7 @@
 using ForumWebProject.Application.Models;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Shared.Authorization.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForumWebProject.Api.Controllers;
@@ -19,10 +20,26 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    [MustHavePermission(ForumAction.Read, ForumResource.Users)]
+    [AllowAnonymous]
     public async Task<IActionResult> Register([FromBody]RegisterRequest request)
     {
         await _userService.RegisterAsync(request);
+        return Ok();
+    }
+
+    [HttpPut("{userId}/addrole/{roleId}")]
+    [MustHavePermission(ForumAction.Edit, ForumResource.Roles)]
+    public async Task<IActionResult> AddRole(string userId, string roleId)
+    {
+        await _userService.AddRoleAsync(userId, roleId);
+        return Ok();
+    }
+
+    [HttpPut("{userId}/removerole/{roleId}")]
+    [MustHavePermission(ForumAction.Edit, ForumResource.Roles)]
+    public async Task<IActionResult> RemoveRole(string userId, string roleId)
+    {
+        await _userService.RemoveRoleAsync(userId, roleId);
         return Ok();
     }
 }

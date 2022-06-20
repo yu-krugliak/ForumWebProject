@@ -4,7 +4,7 @@ namespace ForumWebProject.Application.Exceptions;
 
 public class CustomException : Exception
 {
-    public List<string>? ErrorMessages { get; }
+    public virtual List<string>? ErrorMessages { get; }
     
     public HttpStatusCode StatusCode { get; }
 

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ForumWebProject.Infrastructure.Identity;
+﻿using ForumWebProject.Infrastructure.Identity;
 
 namespace ForumWebProject.Infrastructure.Entities
 {
-    public class Post
+    public class Post : IEntity<Guid>
     {
         public Guid Id { get; set; }
         public int PostNumber { get; set; }

@@ -28,6 +28,7 @@ public class ExceptionHandlingMiddleware : IMiddleware
                 while (ex.InnerException != null)
                 {
                     ex = ex.InnerException;
+                    errorModel.Messages.Add(ex.Message);
                 }
             }
 

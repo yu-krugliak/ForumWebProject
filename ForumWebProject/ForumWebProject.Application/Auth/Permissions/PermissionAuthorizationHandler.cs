@@ -15,7 +15,7 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<Authorization
 
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, AuthorizationRequirement requirement)
     {
-        if (context.User?.GetUserId() is { } userId && await _userService.HasPermission(userId, requirement.Permission))
+        if (context.User?.GetUserId() is { } userId && await _userService.HasPermissionAsync(userId, requirement.Permission))
         {
             context.Succeed(requirement);
         }

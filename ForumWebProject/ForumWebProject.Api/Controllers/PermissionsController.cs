@@ -1,5 +1,4 @@
 ﻿using ForumWebProject.Application.Auth.Permissions;
-using ForumWebProject.Application.Models;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Shared.Authorization.Permissions;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +31,7 @@ public class PermissionsController : ControllerBase
         return Ok(await _permissionService.GetByIdAsync(id));
     }
 
-    [HttpPost("grant")]
+    [HttpPut("grant")]
     [MustHavePermission(ForumAction.Edit, ForumResource.Permissions)]
     public async Task<IActionResult> Grant([FromQuery]Guid roleId, [FromQuery]Guid permissionId, CancellationToken cancellationToken)
     {
@@ -40,7 +39,7 @@ public class PermissionsController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("revoke")]
+    [HttpPut("revoke")]
     [MustHavePermission(ForumAction.Edit, ForumResource.Permissions)]
     public async Task<IActionResult> Revoke([FromQuery] Guid roleId, [FromQuery] Guid permissionId, CancellationToken cancellationToken)
     {

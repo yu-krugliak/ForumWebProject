@@ -1,6 +1,8 @@
-﻿namespace ForumWebProject.Infrastructure.Identity;
+﻿using ForumWebProject.Infrastructure.Entities;
 
-public class Permission
+namespace ForumWebProject.Infrastructure.Identity;
+
+public class Permission : IEntity<Guid>
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }
