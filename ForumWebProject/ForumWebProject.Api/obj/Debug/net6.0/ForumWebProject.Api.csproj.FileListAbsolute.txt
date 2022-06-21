@@ -72,3 +72,5 @@ D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\For
 D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\FluentValidation.dll
 D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\FluentValidation.AspNetCore.dll
 D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\FluentValidation.DependencyInjectionExtensions.dll
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\Humanizer.dll
+D:\EPAM\ForumWebProject\ForumWebProject\ForumWebProject.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll

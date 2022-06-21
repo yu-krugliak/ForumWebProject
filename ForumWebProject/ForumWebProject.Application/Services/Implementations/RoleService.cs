@@ -4,6 +4,7 @@ using ForumWebProject.Application.Models;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Infrastructure.Identity;
 using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,10 +13,11 @@ namespace ForumWebProject.Application.Services.Implementations;
 public class RoleService : IRoleService
 {
     private readonly RoleManager<Role> _roleManager;
-
-    public RoleService(RoleManager<Role> roleManager)
+    private readonly IMapper _mapper;
+    public RoleService(RoleManager<Role> roleManager, IMapper mapper)
     {
         _roleManager = roleManager;
+        _mapper = mapper;
     }
 
     public async Task<RoleView> AddRoleAsync(RoleRequest roleRequest)
@@ -33,13 +35,13 @@ public class RoleService : IRoleService
             throw new ServerErrorException("Error adding new role", result.Errors.Select(e => e.Description).ToList());
         }
 
-        return role.Adapt<RoleView>();
+        return _mapper.Map<RoleView>(role);
     }
 
     public async Task<IEnumerable<RoleView>> GetAllAsync()
     {
         var roles = await _roleManager.Roles.ToListAsync();
-        return roles.Adapt<IEnumerable<RoleView>>();
+        return _mapper.Map<IEnumerable<RoleView>>(roles);
     }
 
     public async Task<RoleView> GetByIdAsync(Guid id)
@@ -50,6 +52,6 @@ public class RoleService : IRoleService
             throw new NotFoundException($"Role with id {id} not found.");
         }
 
-        return role.Adapt<RoleView>();
+        return _mapper.Map<RoleView>(role);
     }
 }

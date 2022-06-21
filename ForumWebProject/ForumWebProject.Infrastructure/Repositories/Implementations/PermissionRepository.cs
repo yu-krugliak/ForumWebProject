@@ -16,7 +16,9 @@ public class PermissionRepository : RepositoryBase<Permission>, IPermissionRepos
 
     public async Task<IEnumerable<Permission>> GetByRoleIdAsync(Guid roleId, CancellationToken cancellationToken)
     {
-        return await _forumContext.Permissions.Where(rc => rc.RolePermissions!.Any(r => r.RoleId == roleId)).ToListAsync(cancellationToken);
+        return await _forumContext.Permissions
+            .Where(rc => rc.RolePermissions!.Any(r => r.RoleId == roleId))
+            .ToListAsync(cancellationToken);
     }
 
     public async Task<Permission?> GetByNameAsync(string name, CancellationToken cancellationToken)
@@ -38,12 +40,14 @@ public class PermissionRepository : RepositoryBase<Permission>, IPermissionRepos
 
     public async Task RevokeFromRole(Guid permissionId, Guid roleId, CancellationToken cancellationToken)
     {
-        if (await _forumContext.RolePermissions.FindAsync(roleId, permissionId) is not { } rolePermission)
+        var permission =
+            await _forumContext.RolePermissions.FindAsync(new object?[] { roleId, permissionId }, cancellationToken);
+        if (permission is null)
         {
             return;
         }
 
-        _forumContext.RolePermissions.Remove(rolePermission);
+        _forumContext.RolePermissions.Remove(permission);
         await _forumContext.SaveChangesAsync(cancellationToken);
     }
 }

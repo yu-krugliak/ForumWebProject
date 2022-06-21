@@ -9,56 +9,56 @@ namespace ForumWebProject.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class TopicController : ControllerBase
     {
-        private readonly ICategoryService _categoryService;
+        private readonly ITopicService _topicService;
 
-        public CategoriesController(ICategoryService categoryService)
+        public TopicController(ITopicService topicService)
         {
-            _categoryService = categoryService;
+            _topicService = topicService;
         }
 
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _categoryService.GetAllCategoriesAsync());
+            return Ok(await _topicService.GetAllTopicsAsync());
         }
 
         [HttpGet("byparent/{id}")]
         [MustHavePermission(ForumAction.Read, ForumResource.Categories)]
-        public async Task<IActionResult> GetAllCategoriesByParent(Guid id)
+        public async Task<IActionResult> GetAllTopicByCategory(Guid id)
         {
-            return Ok(await _categoryService.GetAllCategoriesByParentIdAsync(id));
+            return Ok(await _topicService.GetAllTopicsByCategoryIdAsync(id));
         }
 
         [HttpGet("{id}")]
         [MustHavePermission(ForumAction.Read, ForumResource.Categories)]
         public async Task<IActionResult> GetById(Guid id)
         {
-            return Ok(await _categoryService.GetCategoryByIdAsync(id));
+            return Ok(await _topicService.GetTopicByIdAsync(id));
         }
 
         [HttpPost]
         [MustHavePermission(ForumAction.Create, ForumResource.Categories)]
-        public async Task<IActionResult> Add([FromBody] CategoryRequest request)
+        public async Task<IActionResult> Add([FromBody] TopicRequest request)
         {
-            return Ok(await _categoryService.AddCategoryAsync(request));
+            return Ok(await _topicService.AddTopicAsync(request));
         }
 
-        [HttpPut("{categoryId}")]
+        [HttpPut("{topicId}")]
         [MustHavePermission(ForumAction.Edit, ForumResource.Categories)]
-        public async Task<IActionResult> Update(Guid categoryId, [FromBody] CategoryRequest request)
+        public async Task<IActionResult> Update(Guid topicId, [FromBody] TopicRequest request)
         {
-            await _categoryService.UpdateCategoryAsync(categoryId, request);
+            await _topicService.UpdateCategoryAsync(topicId, request);
             return Ok();
         }
         
-        [HttpDelete("{categoryId}")]
+        [HttpDelete("{topicId}")]
         [MustHavePermission(ForumAction.Delete, ForumResource.Categories)]
-        public async Task<IActionResult> Delete(Guid categoryId)
+        public async Task<IActionResult> Delete(Guid topicId)
         {
-            await _categoryService.DeleteByCategoryIdAsync(categoryId);
+            await _topicService.DeleteByTopicIdAsync(topicId);
             return Ok();
         }
     }

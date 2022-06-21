@@ -4,16 +4,18 @@ using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Infrastructure.Entities;
 using ForumWebProject.Infrastructure.Repositories.Interfaces;
 using Mapster;
+using MapsterMapper;
 
 namespace ForumWebProject.Application.Services.Implementations
 {
     public class TopicService : ServiceBase<Topic>, ITopicService
     {
         private readonly ITopicRepository _topicRepository;
-
-        public TopicService(ITopicRepository topicRepository) : base(topicRepository)
+        private readonly IMapper _mapper;
+        public TopicService(ITopicRepository topicRepository, IMapper mapper) : base(topicRepository)
         {
             _topicRepository = topicRepository;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<TopicView>> GetAllTopicsAsync()
@@ -25,9 +27,8 @@ namespace ForumWebProject.Application.Services.Implementations
                 throw new NotFoundException("Topics not found.");
             }
 
-            var topicsView = topics.Adapt<IEnumerable<TopicView>>();
-
-            return topicsView;
+            var topicsViews = _mapper.Map<IEnumerable<TopicView>>(topics);
+            return topicsViews;
         }
 
         public async Task<IEnumerable<TopicView>> GetAllTopicsByCategoryIdAsync(Guid topicId)
@@ -39,8 +40,7 @@ namespace ForumWebProject.Application.Services.Implementations
                 throw new NotFoundException("Topics in this category not found.");
             }
 
-            var topicsViews = topics.Adapt<IEnumerable<TopicView>>();
-
+            var topicsViews = _mapper.Map<IEnumerable<TopicView>>(topics);
             return topicsViews;
         }
 
@@ -48,14 +48,13 @@ namespace ForumWebProject.Application.Services.Implementations
         {
             var topic = await GetExistingEntityById(topicId);
             
-            var topicView = topic.Adapt<TopicView>();
-
+            var topicView = _mapper.Map<TopicView>(topic);
             return topicView;
         }
 
         public async Task<TopicView> AddTopicAsync(TopicRequest topicRequest)
         {
-            var topic = topicRequest.Adapt<Topic>();
+            var topic = _mapper.Map<Topic>(topicRequest);
 
             if (await _topicRepository.GetByNameAsync(topic.Name!) is not null)
             {
@@ -69,14 +68,13 @@ namespace ForumWebProject.Application.Services.Implementations
                 throw new ServerErrorException("Can't add this topic.", null);
             }
 
-            return addedTopic.Adapt<TopicView>();
+            return _mapper.Map<TopicView>(addedTopic);
         }
 
         public async Task DeleteTopicAsync(Guid topicId, TopicRequest topicRequest)
         {
             var topic = await GetExistingEntityById(topicId);
-            topicRequest.Adapt(topic);
-
+            
             var result = await _topicRepository.DeleteAsync(topic);
 
             if (!result)
@@ -98,8 +96,8 @@ namespace ForumWebProject.Application.Services.Implementations
         public async Task UpdateTopicAsync(Guid topicId, TopicRequest topicRequest)
         {
             var topic = await GetExistingEntityById(topicId);
-            topicRequest.Adapt(topic);
-
+            topic = _mapper.Map<Topic>(topicRequest);
+            
             var result = await _topicRepository.UpdateAsync(topic);
 
             if (!result)

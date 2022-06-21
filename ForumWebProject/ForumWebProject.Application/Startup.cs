@@ -1,13 +1,13 @@
 ﻿using FluentValidation;
 using ForumWebProject.Application.Auth.Jwt;
 using ForumWebProject.Application.Auth.Permissions;
+using ForumWebProject.Application.Mapster;
 using ForumWebProject.Application.Middleware;
 using ForumWebProject.Application.Models.Validators;
 using ForumWebProject.Application.Services.Implementations;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Infrastructure.Context;
 using ForumWebProject.Infrastructure.Identity;
-using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -73,8 +73,8 @@ public static class Startup
 
     public static IServiceCollection AddMapster(this IServiceCollection services)
     {
-        var config = TypeAdapterConfig.GlobalSettings;
-        return services.AddSingleton(config)
+        return services
+            .AddMapsterConfiguration()
             .AddTransient<IMapper, ServiceMapper>();
     }
 }

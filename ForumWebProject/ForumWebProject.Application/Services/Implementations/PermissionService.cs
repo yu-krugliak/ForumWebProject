@@ -3,22 +3,24 @@ using ForumWebProject.Application.Models;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Infrastructure.Repositories.Interfaces;
 using Mapster;
+using MapsterMapper;
 
 namespace ForumWebProject.Application.Services.Implementations;
 
 public class PermissionService : IPermissionService
 {
     private readonly IPermissionRepository _permissionRepository;
-
-    public PermissionService(IPermissionRepository permissionRepository)
+    private readonly IMapper _mapper;
+    public PermissionService(IPermissionRepository permissionRepository, IMapper mapper)
     {
         _permissionRepository = permissionRepository;
+        _mapper = mapper;
     }
 
     public async Task<IEnumerable<PermissionView>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var permissions = await _permissionRepository.GetAllAsync();
-        return permissions.Adapt<IEnumerable<PermissionView>>();
+        return _mapper.Map<IEnumerable<PermissionView>>(permissions);
     }
 
     public async Task<PermissionView> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -26,10 +28,10 @@ public class PermissionService : IPermissionService
         var permission = await _permissionRepository.GetByIdAsync(id);
         if (permission is null)
         {
-            throw new NotFoundException($"Permissin with id {id} not found.");
+            throw new NotFoundException($"Permission with id {id} not found.");
         }
 
-        return permission.Adapt<PermissionView>();
+        return _mapper.Map<PermissionView>(permission);
     }
 
     public async Task GrantToRole(Guid permissionId, Guid roleId, CancellationToken cancellationToken = default)
