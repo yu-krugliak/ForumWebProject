@@ -5,6 +5,12 @@ export interface PostView {
   id?: string;
   postNumber?: number;
   text?: null | string;
+
   topicId?: string;
   userIdCreated?: string;
+
+  userName?: string;
+  userFirstName?: string;
+  userLastName?: string;
+  userRegistrationDate?:  any;
 }

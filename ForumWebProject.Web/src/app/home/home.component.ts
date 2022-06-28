@@ -69,7 +69,7 @@ export default class HomeComponent implements OnInit {
     });
   }
 
-   @ViewChild('homeaccordion')  homePanels!: MatAccordion;
+  @ViewChild('homeaccordion')  homePanels!: MatAccordion;
 
   openAll(){
     this.homePanels.openAll();
@@ -92,10 +92,6 @@ export default class HomeComponent implements OnInit {
     }) 
     
     return topics;
-  }
-
-  openTopic(topicId : string){
-
   }
 }
 

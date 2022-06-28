@@ -99,7 +99,10 @@ public class UserService : IUserService
         {
             Email = request.Email,
             UserName = request.UserName,
-            FirstName = request.FirstName
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            RegistrationDate = DateTime.Now,
+            NormalizedUserName = request.UserName
         };
 
         var result = await _userManager.CreateAsync(user, request.Password);

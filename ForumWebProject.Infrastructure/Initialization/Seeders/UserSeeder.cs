@@ -23,9 +23,9 @@ public class UserSeeder : ICustomSeeder
             Email = "u@u.com",
             FirstName = "Sad",
             LastName = "Pepe",
-            UserName = "username",
+            UserName = "PepeUsername",
             NormalizedEmail = "u@u.com".ToUpperInvariant(),
-            NormalizedUserName = "username".ToUpperInvariant()
+            NormalizedUserName = "PepeUsername".ToUpperInvariant()
         };
         await AddUser(user, "1111", ForumRoles.User);
 

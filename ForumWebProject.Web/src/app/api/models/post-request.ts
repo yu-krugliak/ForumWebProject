@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export interface PostRequest {
-  datePosted?: string;
+  datePosted?: any;
   postNumber?: number;
   text?: null | string;
   topicId?: string;

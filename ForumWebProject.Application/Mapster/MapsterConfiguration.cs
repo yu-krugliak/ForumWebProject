@@ -24,6 +24,16 @@ public static class MapsterConfiguration
         config.ForType<TopicRequest, Topic>()
             .IgnoreNullValues(true);
         
+        config.ForType<Post, PostView>()
+            .Map(p => p.UserFirstName, pv => pv.User.FirstName)
+            .Map(p => p.UserLastName, pv => pv.User.LastName)
+            .Map(p => p.UserRegistrationDate, pv => pv.User.RegistrationDate)
+            .Map(p => p.UserName, pv => pv.User.UserName)
+            .IgnoreNullValues(false);
+        
+        config.ForType<PostRequest, Post>()
+            .IgnoreNullValues(true);
+        
         config.ForType<Role, RoleView>()
             .IgnoreNullValues(false);
 

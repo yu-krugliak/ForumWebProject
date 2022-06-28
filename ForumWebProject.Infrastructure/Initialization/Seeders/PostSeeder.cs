@@ -19,7 +19,6 @@ public class PostSeeder : ICustomSeeder
         {
             new Post()
             {
-                PostNumber = 1,
                 Id = Guid.Parse("e644b4ae-13f5-47d4-858f-dad8e9e9cc22"),
                 Text = "I have a nice cat, and you?",
                 //DatePosted = DateTime.Now,
@@ -28,7 +27,6 @@ public class PostSeeder : ICustomSeeder
             },
             new Post()
             {
-                PostNumber = 2,
                 Id = Guid.Parse("cab128d9-3886-40a9-afc7-6d8ee91fdd7f"),
                 Text = "Guys????",
                 //DatePosted = DateTime.Now,
@@ -42,7 +40,6 @@ public class PostSeeder : ICustomSeeder
         {
             new Post()
             {
-                PostNumber = 1,
                 Id = Guid.Parse("5bf67b2b-f22f-4a46-8d96-03c923077e7b"),
                 Text = "Also I have green frog. Guys can someone respond??",
                 //DatePosted = DateTime.Now,
@@ -51,7 +48,6 @@ public class PostSeeder : ICustomSeeder
             },
             new Post()
             {
-                PostNumber = 2,
                 Id = Guid.Parse("da0e72da-e952-4769-9e71-dc363cdf99b6"),
                 Text = "HELOOOOOOO????",
                 //DatePosted = DateTime.Now,

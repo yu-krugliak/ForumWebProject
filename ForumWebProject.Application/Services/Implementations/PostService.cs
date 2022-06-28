@@ -1,4 +1,5 @@
-﻿using ForumWebProject.Application.Services.Interfaces;
+﻿using ForumWebProject.Application.Auth;
+using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Application.Exceptions;
 using ForumWebProject.Application.Models;
 using ForumWebProject.Infrastructure.Entities;
@@ -12,11 +13,13 @@ namespace ForumWebProject.Application.Services.Implementations
     {
         private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
+        private readonly ICurrentUser _currentUser;
 
-        public PostService(IPostRepository postRepository, IMapper mapper) : base(postRepository)
+        public PostService(IPostRepository postRepository, IMapper mapper, ICurrentUser currentUser) : base(postRepository)
         {
             _postRepository = postRepository;
             _mapper = mapper;
+            _currentUser = currentUser;
         }
         
         public async Task<IEnumerable<PostView>> GetAllPostsAsync()
@@ -69,6 +72,8 @@ namespace ForumWebProject.Application.Services.Implementations
         public async Task<PostView> AddPostAsync(PostRequest postRequest)
         {
             var post = _mapper.Map<Post>(postRequest);
+            post.UserIdCreated = Guid.Parse(_currentUser.GetUserId());
+            post.DatePosted = DateTime.UtcNow;
             
             var addedPost = await _postRepository.AddAsync(post);
 

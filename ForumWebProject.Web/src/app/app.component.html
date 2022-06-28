@@ -8,11 +8,17 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <mat-toolbar color="primary">
-  <h1>
+  <!-- <h1>
     Forum 
-  </h1>
-  <button mat-button routerLink="/">HOME</button>
-  <button mat-button routerLink="/about">About</button>
+  </h1> -->
+  <button mat-stroked-button color="basic" routerLink="/">FORUM</button>
+  <div>
+    <button mat-button routerLink="/">HOME</button>
+    <button mat-button routerLink="/about">ABOUT</button>
+  </div>
+  <div>
+    <button mat-button (click)="openLoginDialog('300ms', '300ms')">Login</button>
+  </div>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

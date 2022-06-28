@@ -5,7 +5,6 @@ namespace ForumWebProject.Infrastructure.Entities
     public class Post : IEntity<Guid>
     {
         public Guid Id { get; set; }
-        public int PostNumber { get; set; }
         public string? Text { get; set; }
         public DateTime DatePosted { get; set; }
 

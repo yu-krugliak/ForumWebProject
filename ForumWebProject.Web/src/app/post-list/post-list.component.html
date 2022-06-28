@@ -1,16 +1,33 @@
-<mat-accordion #postaccordion="matAccordion" class="example-headers-align" multi>
-    <mat-expansion-panel *ngFor="let post of posts" style="margin-top:11px;">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                {{post.userIdCreated}} 
-            </mat-panel-title>
-            <mat-panel-description>
-                date: {{post.datePosted}} number: {{post.postNumber}}
-            <mat-icon>pets</mat-icon>
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-        <p>
-          {{post.text}}
-        </p>
-    </mat-expansion-panel>
-</mat-accordion>
+<div class="layout">
+
+    <div class="leftcolumn">
+        <div class="post" *ngFor="let post of posts">
+            <div class="post-wrapper user-content">
+                <div class="avatar">
+                </div>
+                <h3>{{post.userName}}</h3>
+                <p>{{post.userFirstName}} {{post.userLastName}}</p>
+                <p>Member since: <br> {{post.userRegistrationDate}}</p>
+            </div>
+            <div class="post-delimeter"></div>
+            <div class="post-wrapper post-content">
+                <p class="post-text">{{post.text}}</p>
+                <div class="post-metadata">{{post.datePosted}}</div>
+            </div>
+        </div>    
+
+        <div class="post">
+            <mat-form-field class="add-post" appearance="fill" id="post-input">
+                <mat-label style="color: white">Add a new post:)</mat-label>
+                <textarea  id="new-post-text" matInput placeholder="Hello 👋" ></textarea>
+            </mat-form-field>
+            <button mat-stroked-button color="primary" (click)="send()">Send</button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="footer">
+    <img src="assets/img/nekohd_agad0aeaat8fchk.png" alt="neko">
+</div>

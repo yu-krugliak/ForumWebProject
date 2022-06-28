@@ -27,7 +27,8 @@ namespace ForumWebProject.Api.Controllers
         }
 
         [HttpGet("bytopic/{id}")]
-        [MustHavePermission(ForumAction.Read, ForumResource.Posts)]
+        [AllowAnonymous]
+        //[MustHavePermission(ForumAction.Read, ForumResource.Posts)]
         [ProducesResponseType(typeof(PostView[]), 200)]
         public async Task<IActionResult> GetAllPostsByTopic(Guid id)
         {

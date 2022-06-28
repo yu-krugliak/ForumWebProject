@@ -15,7 +15,7 @@ namespace ForumWebProject.Infrastructure.Repositories.Implementations
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _forumContext.Set<TEntity>().AsNoTracking().ToListAsync();
+            return await _forumContext.Set<TEntity>().ToListAsync();
         }
 
         public virtual async Task<TEntity?> GetByIdAsync(Guid id)

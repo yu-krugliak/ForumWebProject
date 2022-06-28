@@ -1,5 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/purple-green.css";
 
+:root {
+    --dark-background: #181818;
+    --dark-border: rgba(255,255,255,0.1);
+    --dark-primary-font: #ffffff;
+    --dark-secondary-font: #dfdfdfff;
+    --dark-logo-font: #f2f2f2;
+    --dark-status-ok: rgb(41, 99, 41);
+    --dark-status-error: #ab3030;
+    --dark-panel: rgba(33, 33, 33, 0.95); 
+    --dark-element: rgba(50, 50, 50);
+}
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #303030;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: var(--dark-panel);}

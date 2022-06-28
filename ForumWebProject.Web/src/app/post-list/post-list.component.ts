@@ -1,7 +1,7 @@
+import { PostRequest } from './../api/models/post-request';
 import { PostsService } from './../api/services/posts.service';
 import { PostView } from './../api/models/post-view';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatAccordion } from '@angular/material/expansion';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -32,6 +32,17 @@ export class PostListComponent implements OnInit {
     });
   }
 
-  @ViewChild('postaccordion')  postPanels!: MatAccordion;
+  send() : void{
+    let request: PostRequest = ({
+      text: (<HTMLInputElement>document.getElementById("new-post-text")).value,
+      topicId: this._topicId
+    });
+    console.log(request);
+
+    this.postsService.apiPostsPost$Json({body: request}).subscribe((data: PostView) =>{
+        console.log(data);
+        this.posts.push(data);
+    });
+  }
 }
 

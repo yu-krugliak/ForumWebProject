@@ -8,7 +8,7 @@ namespace ForumWebProject.Infrastructure.Context.Configurations
     {
         public void Configure(EntityTypeBuilder<Post> builder)
         {
-            builder.HasKey(post => new { post.PostNumber, post.Id });
+            builder.HasKey(post => post.Id );
 
             builder.Property(post => post.Text);
             builder.Property(post => post.DatePosted);
