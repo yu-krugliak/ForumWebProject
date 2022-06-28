@@ -24,5 +24,19 @@ namespace ForumWebProject.Infrastructure.Repositories.Implementations
             return await _forumContext.Posts
                 .Where(p => p.UserIdCreated == userId).ToListAsync();
         }
+
+        public async Task<IEnumerable<Post>> FindByContainingText(string textFilter)
+        {
+            return await _forumContext.Posts
+                .Where(p => p.Text!.Contains(textFilter))
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Post>> FindByDatePeriod(DateTime dateStart, DateTime dateEnd)
+        {
+            return await _forumContext.Posts.Where(p =>
+                    p.DatePosted >= dateStart && dateEnd >= p.DatePosted)
+                .ToListAsync();
+        }
     }
 }

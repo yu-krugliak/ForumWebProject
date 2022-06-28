@@ -1,8 +1,7 @@
 ﻿namespace ForumWebProject.Application.Models;
 
-public class PostView
+public class PostRequest
 {
-    public Guid Id { get; set; }
     public int PostNumber { get; set; }
     
     public string? Text { get; set; }

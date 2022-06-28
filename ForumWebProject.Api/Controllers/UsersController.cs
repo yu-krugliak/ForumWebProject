@@ -26,6 +26,14 @@ public class UsersController : ControllerBase
         await _userService.RegisterAsync(request);
         return Ok();
     }
+    
+    [HttpGet("permissions")]
+    [MustHavePermission(ForumAction.Read, ForumResource.Users)]
+    [ProducesResponseType(typeof(string[]), 200)]
+    public async Task<IActionResult> GetPermissions()
+    {
+        return Ok(await _userService.GetCurrentUserPermissions());
+    }
 
     [HttpPut("{userId}/addrole/{roleId}")]
     [MustHavePermission(ForumAction.Edit, ForumResource.Roles)]

@@ -26,7 +26,7 @@ public class PermissionsController : ControllerBase
 
     [HttpGet("{id}")]
     [MustHavePermission(ForumAction.Read, ForumResource.Permissions)]
-    public async Task<IActionResult> GetAll(Guid id)
+    public async Task<IActionResult> Get(Guid id)
     {
         return Ok(await _permissionService.GetByIdAsync(id));
     }

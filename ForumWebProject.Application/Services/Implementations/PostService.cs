@@ -8,115 +8,137 @@ using MapsterMapper;
 
 namespace ForumWebProject.Application.Services.Implementations
 {
-    public class CategoryService : ServiceBase<Category>, ICategoryService
+    public class PostService : ServiceBase<Post>, IPostService
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
 
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper) : base(categoryRepository)
+        public PostService(IPostRepository postRepository, IMapper mapper) : base(postRepository)
         {
-            _categoryRepository = categoryRepository;
+            _postRepository = postRepository;
             _mapper = mapper;
         }
-
-        /// <summary>
-        /// Returns all categories
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotFoundException"></exception>
-        public async Task<IEnumerable<CategoryView>> GetAllCategoriesAsync()
-        {
-            var categories = await _categoryRepository.GetAllAsync();
-
-            if (categories is null)
-            {
-                throw new NotFoundException("Categories not found.");
-            }
-            
-            var categoriesViews = _mapper.Map<IEnumerable<CategoryView>>(categories);
-            return categoriesViews;
-        }
-
-        public async Task<IEnumerable<CategoryView>> GetAllCategoriesByParentIdAsync(Guid parentCategoryId)
-        {
-            var categories = await _categoryRepository.GetByParentIdAsync(parentCategoryId);
-
-            if (categories is null)
-            {
-                throw new NotFoundException("Categories in this parent category not found.");
-            }
-            
-            var categoriesViews = _mapper.Map<IEnumerable<CategoryView>>(categories);
-            return categoriesViews;
-        }
-
-        public async Task<CategoryView> GetCategoryByIdAsync(Guid categoryId)
-        {
-            var category = await GetExistingEntityById(categoryId);
-
-            var categoryView = _mapper.Map<CategoryView>(category);
-            return categoryView;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="categoryRequest"></param>
-        /// <returns></returns>
-        /// <exception cref="ConflictException"></exception>
-        /// <exception cref="ServerErrorException"></exception>
-        public async Task<CategoryView> AddCategoryAsync(CategoryRequest categoryRequest)
-        {
-            var category = _mapper.Map<Category>(categoryRequest);
-
-            if (await _categoryRepository.GetByNameAsync(category.Name!) is not null)
-            {
-                throw new ConflictException("Category already exists.");
-            }
-
-            var addedCategory = await _categoryRepository.AddAsync(category);
-
-            if (addedCategory is null)
-            {
-                throw new ServerErrorException("Can't add this category.", null);
-            }
-
-            return _mapper.Map<CategoryView>(addedCategory);
-        }
         
-        public async Task DeleteCategoryAsync(Guid categoryId, CategoryRequest categoryRequest)
+        public async Task<IEnumerable<PostView>> GetAllPostsAsync()
         {
-            var category = await GetExistingEntityById(categoryId);
+            var posts = await _postRepository.GetAllAsync();
 
-            var result = await _categoryRepository.DeleteAsync(category);
+            if (posts is null)
+            {
+                throw new NotFoundException("Posts not found.");
+            }
+            
+            var postsViews = _mapper.Map<IEnumerable<PostView>>(posts);
+            return postsViews;
+        }
+
+        public async Task<IEnumerable<PostView>> GetAllPostsByTopicIdAsync(Guid topicId)
+        {
+            var posts = await _postRepository.GetByTopicId(topicId);
+
+            if (posts is null)
+            {
+                throw new NotFoundException("Posts in this topic not found.");
+            }
+            
+            var postViews = _mapper.Map<IEnumerable<PostView>>(posts);
+            return postViews;
+        }
+
+        public async Task<IEnumerable<PostView>> GetAllPostsByUserId(Guid userId)
+        {
+            var posts = await _postRepository.GetByUserId(userId);
+
+            if (posts is null)
+            {
+                throw new NotFoundException("Posts for this user not found.");
+            }
+            
+            var postViews = _mapper.Map<IEnumerable<PostView>>(posts);
+            return postViews;
+        }
+
+        public async Task<PostView> GetPostByIdAsync(Guid postId)
+        {
+            var post = await GetExistingEntityById(postId);
+
+            var postView = _mapper.Map<PostView>(post);
+            return postView;
+        }
+
+        public async Task<PostView> AddPostAsync(PostRequest postRequest)
+        {
+            var post = _mapper.Map<Post>(postRequest);
+            
+            var addedPost = await _postRepository.AddAsync(post);
+
+            if (addedPost is null)
+            {
+                throw new ServerErrorException("Can't add this post.", null);
+            }
+
+            return _mapper.Map<PostView>(addedPost);
+        }
+
+        public async Task DeletePostAsync(Guid postId, PostRequest postRequest)
+        {
+            var post = await GetExistingEntityById(postId);
+
+            var result = await _postRepository.DeleteAsync(post);
 
             if (!result)
             {
-                throw new ServerErrorException("Can't delete this category.", null);
+                throw new ServerErrorException("Can't delete this post.", null);
             }
         }
 
-        public async Task DeleteByCategoryIdAsync(Guid categoryId)
+        public async Task DeleteByPostIdAsync(Guid postId)
         {
-            var result = await _categoryRepository.DeleteByIdAsync(categoryId);
+            var result = await _postRepository.DeleteByIdAsync(postId);
 
             if (!result)
             {
-                throw new ServerErrorException("Can't delete this category.", null);
+                throw new ServerErrorException("Can't delete this post.", null);
             }
         }
 
-        public async Task UpdateCategoryAsync(Guid categoryId, CategoryRequest categoryRequest)
+        public async Task UpdatePostAsync(Guid postId, PostRequest postRequest)
         {
-            var category = await GetExistingEntityById(categoryId);
-            _mapper.Map(categoryRequest, category);
+            var post = await GetExistingEntityById(postId);
+            _mapper.Map(postRequest, post);
 
-            var result = await _categoryRepository.UpdateAsync(category);
+            var result = await _postRepository.UpdateAsync(post);
 
             if (!result)
             {
-                throw new ServerErrorException("Can't update this category.", null);
+                throw new ServerErrorException("Can't update this post.", null);
             }
+        }
+
+        public async Task<IEnumerable<PostView>> FindPostsByContainingText(string textFilter)
+        {
+            var posts = await _postRepository.FindByContainingText(textFilter);
+
+            if (posts is null)
+            {
+                throw new NotFoundException("Posts which contain this text not found.");
+            }
+            
+            var postViews = _mapper.Map<IEnumerable<PostView>>(posts);
+            return postViews;
+        }
+
+        public async Task<IEnumerable<PostView>> FindPostsByDatePeriod(DateTime dateStart, DateTime dateEnd)
+        {
+            var posts = await _postRepository.FindByDatePeriod(dateStart, dateEnd);
+
+            if (posts is null)
+            {
+                throw new NotFoundException("Posts in this period of time not found.");
+            }
+            
+            var postViews = _mapper.Map<IEnumerable<PostView>>(posts);
+            return postViews;
         }
     }
 }

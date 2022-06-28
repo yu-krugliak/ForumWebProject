@@ -1,8 +1,10 @@
-﻿namespace ForumWebProject.Application.Auth;
+﻿using System.Security.Claims;
+
+namespace ForumWebProject.Application.Auth;
 
 public interface ICurrentUser
 {
-    void SetUser(UserClaims user);
-    Guid GetUserId();
+    void SetUser(ClaimsPrincipal user);
+    string GetUserId();
     string GetUserRole();
 }

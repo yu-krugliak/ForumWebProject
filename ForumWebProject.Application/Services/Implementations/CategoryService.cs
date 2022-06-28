@@ -8,7 +8,6 @@ using MapsterMapper;
 
 namespace ForumWebProject.Application.Services.Implementations
 {
-
     public class CategoryService : ServiceBase<Category>, ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -110,7 +109,7 @@ namespace ForumWebProject.Application.Services.Implementations
         public async Task UpdateCategoryAsync(Guid categoryId, CategoryRequest categoryRequest)
         {
             var category = await GetExistingEntityById(categoryId);
-            category = _mapper.Map<Category>(categoryRequest);
+            _mapper.Map(categoryRequest, category);
 
             var result = await _categoryRepository.UpdateAsync(category);
 

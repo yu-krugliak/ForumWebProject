@@ -8,6 +8,17 @@ public static class ForumPermissions
         new(ForumAction.Create, ForumResource.Categories),
         new(ForumAction.Edit, ForumResource.Categories),
         new(ForumAction.Delete, ForumResource.Categories),
+        
+        new(ForumAction.Read, ForumResource.Topics),
+        new(ForumAction.Create, ForumResource.Topics),
+        new(ForumAction.Edit, ForumResource.Topics),
+        new(ForumAction.Delete, ForumResource.Topics),
+        
+        new(ForumAction.Read, ForumResource.Posts),
+        new(ForumAction.Create, ForumResource.Posts),
+        new(ForumAction.Edit, ForumResource.Posts),
+        new(ForumAction.Delete, ForumResource.Posts),
+        new(ForumAction.Find, ForumResource.Posts),
 
         new(ForumAction.Read, ForumResource.Users),
         new(ForumAction.Create, ForumResource.Users),

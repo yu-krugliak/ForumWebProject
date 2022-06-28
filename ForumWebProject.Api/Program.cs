@@ -35,6 +35,11 @@ builder.Services.AddSwaggerGen(options =>
     options.AddSecurityRequirement(new OpenApiSecurityRequirement(){{securityScheme, new string[]{} }});
 });
 
+builder.Services.AddCors(p => p.AddPolicy("corsapp", policyBuilder =>
+{
+    policyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+}));
+
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplication();
 
@@ -49,7 +54,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("corsapp");
+
+//app.UseHttpsRedirection();
 
 app.UseApplication();
 

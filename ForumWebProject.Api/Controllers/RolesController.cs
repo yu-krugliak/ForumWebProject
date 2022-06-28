@@ -20,6 +20,7 @@ public class RolesController : ControllerBase
 
     [HttpGet]
     [MustHavePermission(ForumAction.Read, ForumResource.Roles)]
+    [ProducesResponseType(typeof(IEnumerable<RoleView>), 200)]
     public async Task<IActionResult> GetAll()
     {
         return Ok(await _roleService.GetAllAsync());
@@ -27,13 +28,15 @@ public class RolesController : ControllerBase
 
     [HttpGet("{id}")]
     [MustHavePermission(ForumAction.Read, ForumResource.Roles)]
-    public async Task<IActionResult> GetAll(Guid id)
+    [ProducesResponseType(typeof(RoleView), 200)]
+    public async Task<IActionResult> GetById(Guid id)
     {
         return Ok(await _roleService.GetByIdAsync(id));
     }
 
     [HttpPost]
     [MustHavePermission(ForumAction.Create, ForumResource.Roles)]
+    [ProducesResponseType(typeof(RoleView), 200)]
     public async Task<IActionResult> Add([FromBody]RoleRequest request)
     {
         return Ok(await _roleService.AddRoleAsync(request));

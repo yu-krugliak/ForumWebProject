@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using ForumWebProject.Application.Auth;
 using ForumWebProject.Application.Exceptions;
 using ForumWebProject.Application.Models;
 using ForumWebProject.Application.Services.Interfaces;
@@ -13,13 +14,15 @@ public class UserService : IUserService
 {
     private readonly UserManager<User> _userManager;
     private readonly RoleManager<Role> _roleManager;
+    private readonly ICurrentUser _currentUser;
     private readonly IPermissionRepository _permissionRepository;
 
-    public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IPermissionRepository permissionRepository) 
+    public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IPermissionRepository permissionRepository, ICurrentUser currentUser) 
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _permissionRepository = permissionRepository;
+        _currentUser = currentUser;
     }
 
     public async Task<List<string>> GetPermissionsAsync(string userId, CancellationToken cancellationToken = default)
@@ -38,6 +41,12 @@ public class UserService : IUserService
         }
 
         return permissions.Distinct().ToList();
+    }
+
+    public async Task<IEnumerable<string>> GetCurrentUserPermissions(CancellationToken cancellationToken = default)
+    {
+        var userId = _currentUser.GetUserId();
+        return await GetPermissionsAsync(userId, cancellationToken);
     }
 
     public async Task<bool> HasPermissionAsync(string userId, string permission, CancellationToken cancellationToken = default)

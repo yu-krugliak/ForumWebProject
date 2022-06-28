@@ -18,6 +18,7 @@ public class TokenController : ControllerBase
 
     [HttpPost]
     [AllowAnonymous]
+    [ProducesResponseType(typeof(TokenView), 200)]
     public async Task<IActionResult> Get([FromBody] TokenRequest request, CancellationToken cancellationToken)
     {
         return Ok(await _tokenService.GetTokenAsync(request, cancellationToken));

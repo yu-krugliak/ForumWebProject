@@ -9,56 +9,84 @@ namespace ForumWebProject.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class PostsController : ControllerBase
     {
-        private readonly ICategoryService _categoryService;
+        private readonly IPostService _postService;
 
-        public CategoriesController(ICategoryService categoryService)
+        public PostsController(IPostService postService)
         {
-            _categoryService = categoryService;
+            _postService = postService;
         }
 
         [HttpGet]
         [AllowAnonymous]
+        [ProducesResponseType(typeof(PostView[]), 200)]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _categoryService.GetAllCategoriesAsync());
+            return Ok(await _postService.GetAllPostsAsync());
         }
 
-        [HttpGet("byparent/{id}")]
-        [MustHavePermission(ForumAction.Read, ForumResource.Categories)]
-        public async Task<IActionResult> GetAllCategoriesByParent(Guid id)
+        [HttpGet("bytopic/{id}")]
+        [MustHavePermission(ForumAction.Read, ForumResource.Posts)]
+        [ProducesResponseType(typeof(PostView[]), 200)]
+        public async Task<IActionResult> GetAllPostsByTopic(Guid id)
         {
-            return Ok(await _categoryService.GetAllCategoriesByParentIdAsync(id));
+            return Ok(await _postService.GetAllPostsByTopicIdAsync(id));
+        }
+        
+        [HttpGet("byuser/{id}")]
+        [MustHavePermission(ForumAction.Read, ForumResource.Posts)]
+        [ProducesResponseType(typeof(PostView[]), 200)]
+        public async Task<IActionResult> GetAllPostsByUser(Guid id)
+        {
+            return Ok(await _postService.GetAllPostsByUserId(id));
+        }
+        
+        [HttpGet("bytextmessage/{text}")]
+        [MustHavePermission(ForumAction.Find, ForumResource.Posts)]
+        [ProducesResponseType(typeof(PostView[]), 200)]
+        public async Task<IActionResult> GetAllPostsByText(string text)
+        {
+            return Ok(await _postService.FindPostsByContainingText(text));
+        }
+        
+        [HttpGet("fromdate/{startDate}/todate/{endDate}")]
+        [MustHavePermission(ForumAction.Find, ForumResource.Posts)]
+        [ProducesResponseType(typeof(PostView[]), 200)]
+        public async Task<IActionResult> GetAllPostsByDatePeriod(DateTime startDate, DateTime endDate)
+        {
+            return Ok(await _postService.FindPostsByDatePeriod(startDate, endDate));
         }
 
         [HttpGet("{id}")]
-        [MustHavePermission(ForumAction.Read, ForumResource.Categories)]
+        [MustHavePermission(ForumAction.Read, ForumResource.Posts)]
+        [ProducesResponseType(typeof(PostView), 200)]
         public async Task<IActionResult> GetById(Guid id)
         {
-            return Ok(await _categoryService.GetCategoryByIdAsync(id));
+            return Ok(await _postService.GetPostByIdAsync(id));
         }
 
         [HttpPost]
-        [MustHavePermission(ForumAction.Create, ForumResource.Categories)]
-        public async Task<IActionResult> Add([FromBody] CategoryRequest request)
+        [MustHavePermission(ForumAction.Create, ForumResource.Posts)]
+        [ProducesResponseType(typeof(PostView), 200)]
+        public async Task<IActionResult> Add([FromBody] PostRequest request)
         {
-            return Ok(await _categoryService.AddCategoryAsync(request));
+            return Ok(await _postService.AddPostAsync(request));
         }
 
-        [HttpPut("{categoryId}")]
-        [MustHavePermission(ForumAction.Edit, ForumResource.Categories)]
-        public async Task<IActionResult> Update(Guid categoryId, [FromBody] CategoryRequest request)
+        [HttpPut("{postId}")]
+        [MustHavePermission(ForumAction.Edit, ForumResource.Posts)]
+        public async Task<IActionResult> Update(Guid postId, [FromBody] PostRequest request)
         {
-            await _categoryService.UpdateCategoryAsync(categoryId, request);
+            await _postService.UpdatePostAsync(postId, request);
             return Ok();
         }
         
-        [HttpDelete("{categoryId}")]
-        [MustHavePermission(ForumAction.Delete, ForumResource.Categories)]
-        public async Task<IActionResult> Delete(Guid categoryId)
+        [HttpDelete("{postId}")]
+        [MustHavePermission(ForumAction.Delete, ForumResource.Posts)]
+        public async Task<IActionResult> Delete(Guid postId)
         {
-            await _categoryService.DeleteByCategoryIdAsync(categoryId);
+            await _postService.DeleteByPostIdAsync(postId);
             return Ok();
         }
     }

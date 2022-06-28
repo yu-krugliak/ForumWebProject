@@ -3,16 +3,20 @@ using ForumWebProject.Infrastructure.Entities;
 
 namespace ForumWebProject.Application.Services.Interfaces;
 
-public interface ICategoryService : IService<Category>
+public interface IPostService : IService<Post>
 {
-    Task<IEnumerable<CategoryView>> GetAllCategoriesAsync();
-    Task<IEnumerable<CategoryView>> GetAllCategoriesByParentIdAsync(Guid parentCategoryId);
+    Task<IEnumerable<PostView>> GetAllPostsAsync();
+    Task<IEnumerable<PostView>> GetAllPostsByTopicIdAsync(Guid topicId);
+    Task<IEnumerable<PostView>> GetAllPostsByUserId(Guid userId);
+    Task<PostView> GetPostByIdAsync(Guid postId);
+    
+    Task<PostView> AddPostAsync(PostRequest postRequest);
 
-    Task<CategoryView> GetCategoryByIdAsync(Guid categoryId);
-    Task<CategoryView> AddCategoryAsync(CategoryRequest categoryRequest);
+    Task DeletePostAsync(Guid postId, PostRequest postRequest);
+    Task DeleteByPostIdAsync(Guid postId);
 
-    Task DeleteCategoryAsync(Guid categoryId, CategoryRequest categoryRequest);
-    Task DeleteByCategoryIdAsync(Guid categoryId);
-
-    Task UpdateCategoryAsync(Guid categoryId, CategoryRequest categoryRequest);
+    Task UpdatePostAsync(Guid postId, PostRequest postRequest);
+    
+    Task<IEnumerable<PostView>> FindPostsByContainingText(string textFilter);
+    Task<IEnumerable<PostView>> FindPostsByDatePeriod(DateTime dateStart, DateTime dateEnd);
 }

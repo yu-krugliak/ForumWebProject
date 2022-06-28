@@ -20,42 +20,48 @@ namespace ForumWebProject.Api.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [ProducesResponseType(typeof(TopicView[]), 200)]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _topicService.GetAllTopicsAsync());
         }
 
-        [HttpGet("byparent/{id}")]
-        [MustHavePermission(ForumAction.Read, ForumResource.Categories)]
+        [HttpGet("bycategory/{id}")]
+        [AllowAnonymous]
+        //[MustHavePermission(ForumAction.Read, ForumResource.Topics)]
+        [ProducesResponseType(typeof(TopicView[]), 200)]
         public async Task<IActionResult> GetAllTopicByCategory(Guid id)
         {
             return Ok(await _topicService.GetAllTopicsByCategoryIdAsync(id));
         }
 
         [HttpGet("{id}")]
-        [MustHavePermission(ForumAction.Read, ForumResource.Categories)]
+        [AllowAnonymous]
+        //[MustHavePermission(ForumAction.Read, ForumResource.Topics)]
+        [ProducesResponseType(typeof(TopicView), 200)]
         public async Task<IActionResult> GetById(Guid id)
         {
             return Ok(await _topicService.GetTopicByIdAsync(id));
         }
 
         [HttpPost]
-        [MustHavePermission(ForumAction.Create, ForumResource.Categories)]
+        [MustHavePermission(ForumAction.Create, ForumResource.Topics)]
+        [ProducesResponseType(typeof(TopicView), 200)]
         public async Task<IActionResult> Add([FromBody] TopicRequest request)
         {
             return Ok(await _topicService.AddTopicAsync(request));
         }
 
         [HttpPut("{topicId}")]
-        [MustHavePermission(ForumAction.Edit, ForumResource.Categories)]
+        [MustHavePermission(ForumAction.Edit, ForumResource.Topics)]
         public async Task<IActionResult> Update(Guid topicId, [FromBody] TopicRequest request)
         {
-            await _topicService.UpdateCategoryAsync(topicId, request);
+            await _topicService.UpdateTopicAsync(topicId, request);
             return Ok();
         }
         
         [HttpDelete("{topicId}")]
-        [MustHavePermission(ForumAction.Delete, ForumResource.Categories)]
+        [MustHavePermission(ForumAction.Delete, ForumResource.Topics)]
         public async Task<IActionResult> Delete(Guid topicId)
         {
             await _topicService.DeleteByTopicIdAsync(topicId);

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using ForumWebProject.Application.Auth;
 using ForumWebProject.Application.Auth.Jwt;
 using ForumWebProject.Application.Auth.Permissions;
 using ForumWebProject.Application.Mapster;
@@ -22,9 +23,10 @@ public static class Startup
     {
         return services
             .AddServices()
+            .AddCurrentUser()
+            .AddPermissions()
             .AddIdentity()
             .AddJwtAuth()
-            .AddPermissions()
             .AddTransient<ExceptionHandlingMiddleware>()
             .AddMapster()
             .AddValidatorsFromAssemblyContaining<CategoryRequestValidator>();
@@ -35,13 +37,16 @@ public static class Startup
         return builder
             .UseMiddleware<ExceptionHandlingMiddleware>()
             .UseAuthentication()
-            .UseAuthorization();
+            .UseAuthorization()
+            .UseCurrentUser();
     }
 
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         return services
             .AddTransient<ICategoryService, CategoryService>()
+            .AddTransient<ITopicService, TopicService>()
+            .AddTransient<IPostService, PostService>()
             .AddTransient<IUserService, UserService>()
             .AddTransient<ITokenService, TokenService>()
             .AddTransient<IRoleService, RoleService>()

@@ -20,6 +20,8 @@ namespace ForumWebProject.Api.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        //[MustHavePermission(ForumAction.Read, ForumResource.Categories)]
+        [ProducesResponseType(typeof(CategoryView[]), 200)]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _categoryService.GetAllCategoriesAsync());
@@ -27,6 +29,7 @@ namespace ForumWebProject.Api.Controllers
 
         [HttpGet("byparent/{id}")]
         [MustHavePermission(ForumAction.Read, ForumResource.Categories)]
+        [ProducesResponseType(typeof(CategoryView[]), 200)]
         public async Task<IActionResult> GetAllCategoriesByParent(Guid id)
         {
             return Ok(await _categoryService.GetAllCategoriesByParentIdAsync(id));
@@ -34,6 +37,7 @@ namespace ForumWebProject.Api.Controllers
 
         [HttpGet("{id}")]
         [MustHavePermission(ForumAction.Read, ForumResource.Categories)]
+        [ProducesResponseType(typeof(CategoryView), 200)]
         public async Task<IActionResult> GetById(Guid id)
         {
             return Ok(await _categoryService.GetCategoryByIdAsync(id));
@@ -41,6 +45,7 @@ namespace ForumWebProject.Api.Controllers
 
         [HttpPost]
         [MustHavePermission(ForumAction.Create, ForumResource.Categories)]
+        [ProducesResponseType(typeof(CategoryView), 200)]
         public async Task<IActionResult> Add([FromBody] CategoryRequest request)
         {
             return Ok(await _categoryService.AddCategoryAsync(request));
