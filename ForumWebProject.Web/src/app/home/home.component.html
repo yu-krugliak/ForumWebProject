@@ -1,0 +1,142 @@
+<mat-sidenav-container style="height: 100px">
+    <p>home works!</p>
+    <button mat-raised-button (click)="openLoginDialog('300ms', '300ms')">Test Login Dialog</button>
+</mat-sidenav-container>
+
+<!-- <div style="padding: 13px;">
+    <mat-spinner *ngIf="categories.length === 0"></mat-spinner>
+
+    <mat-card *ngFor="let category of categories" style="margin-top:11px;">
+        <mat-card-header>
+            <mat-card-title>{{category.name}}</mat-card-title>
+            <mat-card-subtitle>ID: {{category.id}} / Parent category ID:{{category.parentCategoryId}}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>
+                {{category.description}}
+            </p>
+        </mat-card-content>
+        <mat-card-actions>
+      <button mat-button>Search category</button>
+    </mat-card-actions>
+    </mat-card>
+</div> -->
+
+<div class="example-action-buttons">
+    <button mat-raised-button color="basic" (click)="homePanels.openAll()">Expand All</button>
+    <button mat-raised-button color="basic" (click)="homePanels.closeAll()">Collapse All</button>
+</div>
+
+
+  <mat-accordion #homeaccordion="matAccordion" class="example-headers-align" multi>
+    <mat-expansion-panel *ngFor="let category of categories" style="margin-top:11px;">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{category.name}} 
+            </mat-panel-title>
+            <mat-panel-description>
+                {{substr(category.description, 0, 60)}}....
+            <mat-icon>pets</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+
+        <p>
+          {{category.description}}
+      </p>
+        <!-- <mat-card class="category">
+            <mat-card-header>
+                <mat-card-title>{{category.name}}</mat-card-title>
+                <mat-card-subtitle>ID: {{category.id}} / Parent category ID:{{category.parentCategoryId}}
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    {{category.description}}
+                </p>
+            </mat-card-content>
+        </mat-card> -->
+
+        <mat-card *ngFor="let topic of category.topics" style="margin-top:11px;" class="topics">
+            <mat-card-header>
+                <mat-card-title>
+                  <button class="topic-link" mat-button color="basic" [routerLink]="['/topic']" [queryParams]="{ id: topic.id }">
+                    {{topic.name}}
+                  </button>
+                </mat-card-title>
+                <mat-card-subtitle>ID: {{topic.id}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    {{topic.description}}
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+            <button mat-button color="basic">Search topic</button>
+            </mat-card-actions>
+        </mat-card>
+
+    </mat-expansion-panel>
+
+    
+            
+    
+    
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          
+        </mat-panel-title>
+        <mat-panel-description>
+          Type your name and age
+          <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>First name</mat-label>
+        <input matInput>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Age</mat-label>
+        <input matInput type="number" min="1">
+      </mat-form-field>
+  
+    </mat-expansion-panel>
+    <mat-expansion-panel disabled>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Destination
+        </mat-panel-title>
+        <mat-panel-description>
+          Type the country name
+          <mat-icon>map</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Country</mat-label>
+        <input matInput>
+      </mat-form-field>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Day of the trip
+        </mat-panel-title>
+        <mat-panel-description>
+          Inform the date you wish to travel
+          <mat-icon>date_range</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Date</mat-label>
+        <input matInput><!-- [matDatepicker]="picker" (focus)="picker.open()" readonly> -->
+      </mat-form-field>
+      <!-- <mat-datepicker #picker></mat-datepicker>  -->
+    </mat-expansion-panel>
+  </mat-accordion>

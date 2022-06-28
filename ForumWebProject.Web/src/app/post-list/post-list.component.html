@@ -1,0 +1,16 @@
+<mat-accordion #postaccordion="matAccordion" class="example-headers-align" multi>
+    <mat-expansion-panel *ngFor="let post of posts" style="margin-top:11px;">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{post.userIdCreated}} 
+            </mat-panel-title>
+            <mat-panel-description>
+                date: {{post.datePosted}} number: {{post.postNumber}}
+            <mat-icon>pets</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>
+          {{post.text}}
+        </p>
+    </mat-expansion-panel>
+</mat-accordion>

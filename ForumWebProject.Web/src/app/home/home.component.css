@@ -1,0 +1,29 @@
+.example-action-buttons {
+    padding-bottom: 20px;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-title,
+  .example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+
+  mat-card.category{
+    background-color: #616161;
+  }
+  mat-card.topics{
+    background-color: #7B1FA2
+    /* #6A1B9A; */
+  }
+
+  mat-card button.topic-link{
+    font-size: 1.4rem;
+  }
