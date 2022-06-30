@@ -13,5 +13,8 @@ namespace ForumWebProject.Infrastructure.Entities
 
         public Guid TopicId { get; set; }
         public virtual Topic Topic { get; set; }
+        
+        public Guid? ReplyToPostId { get; set; }
+        public virtual Post? ReplyToPost { get; set; }
     }
 }

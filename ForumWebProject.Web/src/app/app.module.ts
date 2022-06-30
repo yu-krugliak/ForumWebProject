@@ -18,6 +18,7 @@ import { ApiModule } from './api/api.module';
 import { ApiInterceptor } from './shared/api-interceptor.service';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
+import { WelcomeDialogComponent } from './welcome-dialog/welcome-dialog.component'
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -33,7 +34,8 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     AboutComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    PostListComponent
+    PostListComponent,
+    WelcomeDialogComponent
   ],
 
   imports: [

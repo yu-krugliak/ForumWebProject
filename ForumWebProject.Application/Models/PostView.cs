@@ -10,9 +10,14 @@ public class PostView
 
     public Guid UserIdCreated { get; set; }
     public Guid TopicId { get; set; }
+    public Guid? ReplyToPostId { get; set; }
 
     public string? UserName { get; set; }
     public string? UserFirstName { get; set; }
     public string? UserLastName { get; set; }
     public DateTime UserRegistrationDate { get; set; }
+
+    public PostView? ReplyTo { get; set; }
+    // public string? ReplyToUser { get; set; }
+    // public string? ReplyToText { get; set; }
 }

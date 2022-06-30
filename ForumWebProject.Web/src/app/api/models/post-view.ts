@@ -8,9 +8,14 @@ export interface PostView {
 
   topicId?: string;
   userIdCreated?: string;
+  replyToPostId?: null | string;
 
   userName?: string;
   userFirstName?: string;
   userLastName?: string;
   userRegistrationDate?:  any;
+
+  // replyToUser?: null | string;
+  // replyToText?: null | string;
+  replyTo: PostView | null;
 }

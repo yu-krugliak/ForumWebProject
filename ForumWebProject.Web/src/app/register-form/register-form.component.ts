@@ -1,5 +1,5 @@
 import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register-form',
@@ -19,11 +19,11 @@ export class RegisterFormComponent {
   constructor(){}
 
   form: FormGroup = new FormGroup({
-    email: new FormControl(''),
-    username : new FormControl(''),
-    firstname : new FormControl(''),
-    password: new FormControl(''),
-    confirmpassword : new FormControl(''),
+    email: new FormControl('', Validators.required),
+    username : new FormControl('', Validators.required),
+    firstname : new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    confirmpassword : new FormControl('', Validators.required),
   });
 
   submit() {
