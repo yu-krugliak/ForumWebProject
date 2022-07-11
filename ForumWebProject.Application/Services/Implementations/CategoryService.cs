@@ -28,11 +28,6 @@ namespace ForumWebProject.Application.Services.Implementations
         {
             var categories = await _categoryRepository.GetAllAsync();
 
-            if (categories is null)
-            {
-                throw new NotFoundException("Categories not found.");
-            }
-            
             var categoriesViews = _mapper.Map<IEnumerable<CategoryView>>(categories);
             return categoriesViews;
         }
@@ -41,11 +36,6 @@ namespace ForumWebProject.Application.Services.Implementations
         {
             var categories = await _categoryRepository.GetByParentIdAsync(parentCategoryId);
 
-            if (categories is null)
-            {
-                throw new NotFoundException("Categories in this parent category not found.");
-            }
-            
             var categoriesViews = _mapper.Map<IEnumerable<CategoryView>>(categories);
             return categoriesViews;
         }
@@ -69,17 +59,17 @@ namespace ForumWebProject.Application.Services.Implementations
         {
             var category = _mapper.Map<Category>(categoryRequest);
 
-            if (await _categoryRepository.GetByNameAsync(category.Name!) is not null)
-            {
-                throw new ConflictException("Category already exists.");
-            }
+            // if (await _categoryRepository.GetByNameAsync(category.Name!) is not null)
+            // {
+            //     throw new ConflictException("Category already exists.");
+            // }
 
             var addedCategory = await _categoryRepository.AddAsync(category);
 
-            if (addedCategory is null)
-            {
-                throw new ServerErrorException("Can't add this category.", null);
-            }
+            // if (addedCategory is null)
+            // {
+            //     throw new ServerErrorException("Can't add this category.", null);
+            // }
 
             return _mapper.Map<CategoryView>(addedCategory);
         }
@@ -102,7 +92,7 @@ namespace ForumWebProject.Application.Services.Implementations
 
             if (!result)
             {
-                throw new ServerErrorException("Can't delete this category.", null);
+                throw new NotFoundException("This Category doesn't exist.");
             }
         }
 

@@ -84,7 +84,7 @@ export default class HomeComponent implements OnInit {
   }
 
   getTopicsByCategory(categoryId : any) : TopicView[]{
-    let topics :TopicView[] =[];
+    let topics: TopicView[] =[];
 
     this.topicService.apiTopicBycategoryIdGet$Json({id: categoryId}).subscribe((data: TopicView[])=>{
       console.log(data);

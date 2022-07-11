@@ -8,16 +8,14 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <mat-toolbar color="primary">
-  <!-- <h1>
-    Forum 
-  </h1> -->
   <button mat-stroked-button color="basic" routerLink="/">FORUM</button>
   <div>
     <button mat-button routerLink="/">HOME</button>
     <button mat-button routerLink="/about">ABOUT</button>
   </div>
   <div>
-    <button mat-button (click)="openLoginDialog('300ms', '300ms')">Login</button>
+    <button mat-button (click)="openLoginFormWithRedirectParam()">Login</button>
+    <button mat-button (click)="openRegisterFormWithRedirectParam()">Register</button>
   </div>
 </mat-toolbar>
 
@@ -30,4 +28,3 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-

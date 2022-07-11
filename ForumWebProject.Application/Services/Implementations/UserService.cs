@@ -101,7 +101,7 @@ public class UserService : IUserService
             UserName = request.UserName,
             FirstName = request.FirstName,
             LastName = request.LastName,
-            RegistrationDate = DateTime.Now,
+            RegistrationDate = DateTime.UtcNow,
             NormalizedUserName = request.UserName
         };
 

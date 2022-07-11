@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const modules = [
   MatCardModule,
@@ -23,7 +24,8 @@ const modules = [
   MatDialogModule,
   MatExpansionModule,
   MatFormFieldModule,
-  MatDatepickerModule
+  MatDatepickerModule,
+  MatSnackBarModule
 ];
 
 @NgModule({

@@ -159,6 +159,11 @@ button.close-reply *{
     padding-top: 5px;
 }
 
+.post-manage-buttons{
+    display: flex;
+    gap: 8px;
+}
+
 .post-content-footer .post-metadata{
     text-align: right;
     padding: 0;
@@ -166,7 +171,7 @@ button.close-reply *{
     font-size: 14px;
 }
 
-.post-content-footer .reply-button{
+.post-content-footer .post-button{
     /* text-align: right;
     vertical-align: text-top; */
     padding: 2px 20px;
@@ -177,12 +182,12 @@ button.close-reply *{
     font-size: 14px;
 }
 
-.post-content-footer .reply-button *{
+.post-content-footer .post-button *{
     /* margin: auto 0; */
     vertical-align: middle;
 }
 
-.post-content-footer .reply-button:hover{
+.post-content-footer .post-button:hover{
     background-color: var(--dark-border);
 }
 

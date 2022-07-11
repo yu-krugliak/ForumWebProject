@@ -5,14 +5,16 @@
   <p>
     <mat-form-field>
       <input type="email" matInput placeholder="Email" formControlName="email">
-      <p *ngIf="form.get('email')?.hasError('required')">Name is required</p>
+      <small *ngIf="form.get('email')?.hasError('required')">Email is required</small>
+      <!-- <small *ngIf="form.get('email')?.valid()">Please provide a valid email address</small> -->
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field>
       <input type="password" matInput placeholder="Password" formControlName="password">
-      <p *ngIf="form.get('password')?.hasError('required')">Password is required</p>
+      <small *ngIf="form.get('password')?.hasError('required')">Password is required</small>
+      <p *ngIf="form.get('password')?.hasError('invalid')">Invalid login or password</p>
     </mat-form-field>
   </p>
 
@@ -21,10 +23,13 @@
   </p>
 
   <div class="button">
-    <button type="submit" mat-raised-button color="primary" mat-dialog-close>Login</button>
-    <button type="button" mat-button routerLink="/register" mat-dialog-close>Register</button>
+    <p *ngIf="form.get('password')?.hasError('invalid')">Invalid login or password</p>
+    <button type="submit" mat-raised-button color="primary">Login</button>
+    <button type="button" mat-button (click)="switchToRegister()">Register</button>
   </div>
 
 </form>
 </mat-card-content>
 </mat-card>
+
+<router-outlet></router-outlet>

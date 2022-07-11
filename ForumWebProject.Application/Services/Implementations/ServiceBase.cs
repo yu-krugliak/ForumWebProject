@@ -20,7 +20,7 @@ public class ServiceBase<TEntity> : IService<TEntity> where TEntity : class, IEn
 
         if (entity is null)
         {
-            throw new NotFoundException($"{nameof(TEntity)} with such id doesn't exist.");
+            throw new NotFoundException($"{typeof(TEntity).Name} with such id doesn't exist.");
         }
 
         return entity;

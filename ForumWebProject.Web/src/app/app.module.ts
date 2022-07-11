@@ -19,6 +19,8 @@ import { ApiInterceptor } from './shared/api-interceptor.service';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { WelcomeDialogComponent } from './welcome-dialog/welcome-dialog.component'
+import { MatDialogRef } from '@angular/material/dialog';
+import { PermissionsManager } from './Services/permissions-service';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -49,6 +51,11 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
   providers: [
     ApiInterceptor,
     API_INTERCEPTOR_PROVIDER,
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
+    PermissionsManager
   ],
   bootstrap: [AppComponent]
 })

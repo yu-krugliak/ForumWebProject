@@ -3,7 +3,8 @@ import { PostsService } from './../api/services/posts.service';
 import { PostView } from './../api/models/post-view';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ReplaySubject } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PermissionsManager } from '../Services/permissions-service';
 
 @Component({
   selector: 'app-post-list',
@@ -16,11 +17,11 @@ export class PostListComponent implements OnInit {
 
   posts : PostView[] = [];
 
-  constructor(private postsService: PostsService, private route: ActivatedRoute) { }
+  constructor(private postsService: PostsService, public permissionsManager: PermissionsManager,
+    private route: ActivatedRoute, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.route.queryParams
-    //.filter(params => params.order)
     .subscribe(params => {
       console.log(params); 
       this._topicId = params['id'];
@@ -28,6 +29,7 @@ export class PostListComponent implements OnInit {
 
     this.refresh();
   }
+  
   refresh(){
     this.postsService.apiPostsBytopicIdGet$Json({id: this._topicId}).subscribe((data: PostView[])=>{
       console.log(data);
@@ -36,6 +38,11 @@ export class PostListComponent implements OnInit {
   }
 
   reply(replyToPost: PostView | undefined){
+    const inputElement = (<HTMLInputElement>document.getElementById("new-post-text"));
+    inputElement.focus({preventScroll: true});
+    inputElement.scrollIntoView({
+      behavior: "smooth"
+    });
     this._replyToPost = replyToPost;
   }
 
@@ -44,19 +51,36 @@ export class PostListComponent implements OnInit {
   }
 
   send() : void{
+    const inputElement = (<HTMLInputElement>document.getElementById("new-post-text"));
     let request: PostRequest = ({
-      text: (<HTMLInputElement>document.getElementById("new-post-text")).value,
+      text: inputElement.value,
       topicId: this._topicId,
       replyToPostId: this._replyToPost?.id,
     });
-    (<HTMLInputElement>document.getElementById("new-post-text")).value = '';
+
+    inputElement.value = '';
     console.log(request);
 
     this.postsService.apiPostsPost$Json({body: request}).subscribe((data: PostView) =>{
         console.log(data);
+        this.refresh();
     });
+    
     this._replyToPost = undefined;
-    this.refresh();
+    inputElement.scrollIntoView();
+  }
+
+  delete(postIdToDelete: string){
+
+    this.postsService.apiPostsPostIdDelete$Response({postId: postIdToDelete}).subscribe(() =>{
+      this.refresh();
+    });
+
+    this.openSnackBar("Post has been deleted😢", "Thanks");
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action);
   }
 }
 

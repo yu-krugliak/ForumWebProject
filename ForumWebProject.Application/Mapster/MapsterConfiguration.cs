@@ -8,7 +8,7 @@ namespace ForumWebProject.Application.Mapster;
 
 public static class MapsterConfiguration
 {
-    public static IServiceCollection AddMapsterConfiguration(this IServiceCollection services)
+    public static TypeAdapterConfig GetConfiguration()
     {
         var config = new TypeAdapterConfig();
 
@@ -46,6 +46,14 @@ public static class MapsterConfiguration
         config.ForType<Role, RoleView>()
             .IgnoreNullValues(false);
 
+        return config;
+    }
+    
+    public static IServiceCollection AddMapsterConfiguration(this IServiceCollection services)
+    {
+        var config = GetConfiguration();
         return services.AddSingleton(config);
     }
+    
+    
 }

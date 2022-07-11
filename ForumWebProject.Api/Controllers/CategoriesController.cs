@@ -1,4 +1,5 @@
-﻿using ForumWebProject.Application.Auth.Permissions;
+﻿using System.Net;
+using ForumWebProject.Application.Auth.Permissions;
 using ForumWebProject.Application.Models;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Shared.Authorization.Permissions;
@@ -45,10 +46,11 @@ namespace ForumWebProject.Api.Controllers
 
         [HttpPost]
         [MustHavePermission(ForumAction.Create, ForumResource.Categories)]
-        [ProducesResponseType(typeof(CategoryView), 200)]
+        [ProducesResponseType(typeof(CategoryView), (int)HttpStatusCode.Created)]
         public async Task<IActionResult> Add([FromBody] CategoryRequest request)
         {
-            return Ok(await _categoryService.AddCategoryAsync(request));
+            var result = await _categoryService.AddCategoryAsync(request);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
         [HttpPut("{categoryId}")]

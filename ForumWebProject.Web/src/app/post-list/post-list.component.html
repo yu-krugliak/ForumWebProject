@@ -19,7 +19,11 @@
                     <p class="post-text">{{post.text}}</p>
                 </div>
                 <div class="post-content-footer">
-                    <button class="reply-button" (click)="reply(post)"><mat-icon>reply</mat-icon><span>Reply</span></button>
+                    <div class="post-manage-buttons">
+                        <button class="post-button" (click)="reply(post)"><mat-icon>reply</mat-icon><span></span></button>
+                        <button class="post-button" (click)="reply(post)"><mat-icon>edit</mat-icon><span></span></button>
+                        <button *ngIf="this.permissionsManager.hasPermission('Permission.Posts.Delete')" class="post-button" (click)="delete(post.id!)"><mat-icon>delete</mat-icon><span></span></button>
+                    </div>
                     <div class="post-metadata">14:15 03.12.2023</div>
                 </div>
             </div>

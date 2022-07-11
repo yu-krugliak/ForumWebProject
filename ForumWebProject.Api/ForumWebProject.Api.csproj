@@ -24,4 +24,8 @@
     <ProjectReference Include="..\ForumWebProject.Application\ForumWebProject.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="ForumWebProject.Api.IntegrationTests" />
+  </ItemGroup>
+
 </Project>
