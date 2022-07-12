@@ -13,10 +13,31 @@
     <button mat-button routerLink="/">HOME</button>
     <button mat-button routerLink="/about">ABOUT</button>
   </div>
-  <div>
+  <!-- <div>
     <button mat-button (click)="openLoginFormWithRedirectParam()">Login</button>
     <button mat-button (click)="openRegisterFormWithRedirectParam()">Register</button>
-  </div>
+    <button mat-button (click)="logout()">Log Out</button>
+  </div> -->
+
+  <button mat-icon-button [matMenuTriggerFor]="userMenu" aria-label="User Menu" style="margin-left: auto;">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item *ngIf="!isLogged()" (click)="openLoginFormWithRedirectParam()">
+      <mat-icon>launch</mat-icon>
+      <span>Log In</span>
+    </button>
+    <button mat-menu-item *ngIf="!isLogged()"(click)="openRegisterFormWithRedirectParam()">
+      <mat-icon>person_add</mat-icon>
+      <span>Register</span>
+    </button>
+    <button mat-menu-item *ngIf="isLogged()" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Log Out</span>
+    </button>
+  </mat-menu>
+
 </mat-toolbar>
 
 <router-outlet></router-outlet>

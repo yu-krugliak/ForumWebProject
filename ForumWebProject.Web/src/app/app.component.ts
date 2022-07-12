@@ -43,6 +43,19 @@ export class AppComponent {
     this.router.navigate([RoutesConstants.Register], {queryParams: {redirect: this._redirect ?? href}});
   }
 
+  logout(){
+    localStorage.clear();
+    //window.location.reload();
+    var href = this.router.url;
+    this.router.navigateByUrl(href);
+  }
+
+  isLogged():boolean{
+    if(localStorage.getItem("token")){
+      return true;
+    }
+    return false;
+  }
   // openLoginDialog(enterAnimationDuration: string, exitAnimationDuration: string){
   //   this.dialog.open(LoginFormComponent, {
   //     // width: '250px',

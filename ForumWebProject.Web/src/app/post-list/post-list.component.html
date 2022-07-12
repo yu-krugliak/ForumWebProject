@@ -20,8 +20,8 @@
                 </div>
                 <div class="post-content-footer">
                     <div class="post-manage-buttons">
-                        <button class="post-button" (click)="reply(post)"><mat-icon>reply</mat-icon><span></span></button>
-                        <button class="post-button" (click)="reply(post)"><mat-icon>edit</mat-icon><span></span></button>
+                        <button *ngIf="this.permissionsManager.hasPermission('Permission.Posts.Create')" class="post-button" (click)="reply(post)"><mat-icon>reply</mat-icon><span></span></button>
+                        <button *ngIf="this.permissionsManager.hasPermission('Permission.Posts.Edit')" class="post-button" (click)="reply(post)"><mat-icon>edit</mat-icon><span></span></button>
                         <button *ngIf="this.permissionsManager.hasPermission('Permission.Posts.Delete')" class="post-button" (click)="delete(post.id!)"><mat-icon>delete</mat-icon><span></span></button>
                     </div>
                     <div class="post-metadata">14:15 03.12.2023</div>
@@ -29,16 +29,24 @@
             </div>
         </div>    
 
-        <div class="post-add">
+        <div *ngIf="this.permissionsManager.hasPermission('Permission.Posts.Create')" class="post-add">
             <div class="post-reply" *ngIf="_replyToPost">
                 <p class="replay-username">{{_replyToPost.userName}} <button class="close-reply" (click)="closeReply()"><mat-icon>close</mat-icon></button></p>
                 <span class="post-reply-text">{{_replyToPost.text}}</span>
             </div>
             <mat-form-field class="add-post" appearance="fill" id="post-input">
                 <mat-label style="color: white">Add a new post:)</mat-label>
-                <textarea  id="new-post-text" matInput placeholder="Hello 👋" ></textarea>
+                <textarea  id="new-post-text" matInput placeholder="Hello 👋"></textarea>
             </mat-form-field>
             <button mat-stroked-button color="primary" (click)="send()">Send</button>
+        </div>
+
+        <div *ngIf="this.permissionsManager?.hasPermission('Permission.Posts.Create')===false" class="post-add">
+            <mat-form-field class="add-post" readonly appearance="fill" id="post-input">
+                <mat-label style="color: white">To add a new post, please login:)</mat-label>
+                <textarea  id="new-post-text" matInput placeholder="Hello 👋"></textarea>
+            </mat-form-field>
+            <button mat-stroked-button color="primary" [disabled]="true">Send</button>
         </div>
 
     </div>
