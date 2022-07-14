@@ -67,5 +67,10 @@ namespace ForumWebProject.Infrastructure.Repositories.Implementations
 
             return true;
         }
+
+        public virtual async Task<int> CountItems()
+        {
+            return await _forumContext.Set<TEntity>().CountAsync();
+        }
     }
 }

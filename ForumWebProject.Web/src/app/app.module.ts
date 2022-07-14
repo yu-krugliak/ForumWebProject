@@ -1,3 +1,4 @@
+import { PostEditFormComponent } from './topic/post-edit-form/post-edit-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, Provider, forwardRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,17 +11,17 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import HomeComponent from './home/home.component';
 import { AboutComponent } from './about/about.component';
-import { PostListComponent } from './post-list/post-list.component';
+import { PostListComponent } from './topic/post-list/post-list.component';
 
 import { MaterialModule } from './material.module';
 
 import { ApiModule } from './api/api.module';
-import { ApiInterceptor } from './shared/api-interceptor.service';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { RegisterFormComponent } from './register-form/register-form.component';
-import { WelcomeDialogComponent } from './welcome-dialog/welcome-dialog.component'
+import { ApiInterceptor } from './services/api-interceptor.service';
+import { LoginFormComponent } from './authentication/login-form/login-form.component';
+import { RegisterFormComponent } from './authentication/register-form/register-form.component';
+import { WelcomeDialogComponent } from './authentication/welcome-dialog/welcome-dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
-import { PermissionsManager } from './Services/permissions-service';
+import { PermissionsManager } from './services/permissions-service';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -37,6 +38,7 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     LoginFormComponent,
     RegisterFormComponent,
     PostListComponent,
+    PostEditFormComponent,
     WelcomeDialogComponent
   ],
 

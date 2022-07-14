@@ -1,4 +1,5 @@
 ﻿using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Views;
 
 namespace ForumWebProject.Application.Services.Interfaces;
 

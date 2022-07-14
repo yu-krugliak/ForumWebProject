@@ -1,6 +1,8 @@
 ﻿using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Application.Exceptions;
 using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Requests;
+using ForumWebProject.Application.Models.Views;
 using ForumWebProject.Infrastructure.Entities;
 using ForumWebProject.Infrastructure.Repositories.Interfaces;
 using Mapster;
@@ -65,11 +67,6 @@ namespace ForumWebProject.Application.Services.Implementations
             // }
 
             var addedCategory = await _categoryRepository.AddAsync(category);
-
-            // if (addedCategory is null)
-            // {
-            //     throw new ServerErrorException("Can't add this category.", null);
-            // }
 
             return _mapper.Map<CategoryView>(addedCategory);
         }

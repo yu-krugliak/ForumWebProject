@@ -16,7 +16,13 @@ namespace ForumWebProject.Infrastructure.Repositories.Implementations
         public async Task<IEnumerable<Post>> GetByTopicId(Guid topicId)
         {
             return await _forumContext.Posts
-                .Where(p => p.TopicId == topicId).ToListAsync();
+                .Where(p => p.TopicId == topicId).OrderBy(p => p.DatePosted).ToListAsync();
+        }
+        
+        public async Task<IEnumerable<Post>> GetByTopicIdSlice(Guid topicId, int offset, int count)
+        {
+            return await _forumContext.Posts
+                .Where(p => p.TopicId == topicId).OrderBy(p => p.DatePosted).Skip(offset).Take(count).ToListAsync();
         }
 
         public async Task<IEnumerable<Post>> GetByUserId(Guid userId)
@@ -37,6 +43,16 @@ namespace ForumWebProject.Infrastructure.Repositories.Implementations
             return await _forumContext.Posts.Where(p =>
                     p.DatePosted >= dateStart && dateEnd >= p.DatePosted)
                 .ToListAsync();
+        }
+
+        public async Task<Post?> GetLastPostAsync(Guid topicId)
+        {
+            return await _forumContext.Posts.OrderBy(p => p.DatePosted).LastOrDefaultAsync(t => t.TopicId == topicId);
+        }
+        
+        public virtual async Task<int> CountPostsAsync(Guid topicId)
+        {
+            return await _forumContext.Posts.CountAsync(t => t.TopicId == topicId);
         }
     }
 }

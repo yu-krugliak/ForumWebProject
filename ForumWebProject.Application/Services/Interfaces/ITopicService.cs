@@ -1,4 +1,6 @@
 ﻿using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Requests;
+using ForumWebProject.Application.Models.Views;
 using ForumWebProject.Infrastructure.Entities;
 
 namespace ForumWebProject.Application.Services.Interfaces;
@@ -16,4 +18,5 @@ public interface ITopicService : IService<Topic>
     Task DeleteByTopicIdAsync(Guid topicId);
 
     Task UpdateTopicAsync(Guid topicId, TopicRequest topicRequest);
+    Task<PostStatistics> GetPostsStatisticsByTopic(Guid topicId);
 }

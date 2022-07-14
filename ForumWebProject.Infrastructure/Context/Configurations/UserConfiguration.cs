@@ -22,7 +22,8 @@ namespace ForumWebProject.Infrastructure.Context.Configurations
             builder.HasMany(user => user.Posts)
                 .WithOne(post => post.User)
                 .HasForeignKey(post => post.UserIdCreated)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
         }
     }
 }

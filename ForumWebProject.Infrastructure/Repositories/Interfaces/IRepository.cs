@@ -5,7 +5,7 @@ namespace ForumWebProject.Infrastructure.Repositories.Interfaces
     public interface IRepository<TEntity> where TEntity : class, IEntity<Guid>
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
-
+        
         Task<TEntity?> GetByIdAsync(Guid id);
         Task<bool> ExistsAsync(Guid id);
 
@@ -16,6 +16,7 @@ namespace ForumWebProject.Infrastructure.Repositories.Interfaces
         Task<bool> DeleteByIdAsync(Guid id);
 
         Task<bool> UpdateAsync(TEntity entity);
-
+        
+        Task<int> CountItems();
     }
 }

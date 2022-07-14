@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using ForumWebProject.Application.Models.Requests;
 
 namespace ForumWebProject.Application.Models.Validators;
 

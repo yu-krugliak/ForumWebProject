@@ -8,7 +8,7 @@ namespace ForumWebProject.Infrastructure.Context.Configurations
     {
         public void Configure(EntityTypeBuilder<Post> builder)
         {
-            builder.HasKey(post => post.Id );
+            builder.HasKey(post => post.Id);
 
             builder.Property(post => post.Text);
             builder.Property(post => post.DatePosted);
@@ -20,6 +20,12 @@ namespace ForumWebProject.Infrastructure.Context.Configurations
             builder.HasOne(post => post.Topic)
                 .WithMany(topic => topic.Posts)
                 .HasForeignKey(post => post.TopicId);
+            
+            builder.HasMany(post => post.Replies)
+                .WithOne(reply => reply.ReplyToPost)
+                .HasForeignKey(post => post.ReplyToPostId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
         }
     }
 }

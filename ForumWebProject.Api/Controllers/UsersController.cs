@@ -1,5 +1,7 @@
 ﻿using ForumWebProject.Application.Auth.Permissions;
 using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Requests;
+using ForumWebProject.Application.Models.Views;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Shared.Authorization.Permissions;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +35,14 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> GetPermissions()
     {
         return Ok(await _userService.GetCurrentUserPermissions());
+    }
+
+    [HttpGet("email/{email}")]
+    [MustHavePermission(ForumAction.Find, ForumResource.Users)]
+    [ProducesResponseType(typeof(UserView[]), 200)]
+    public async Task<IActionResult> GetByEmail(string email)
+    {
+        return Ok(await _userService.GetUserByEmail(email));
     }
 
     [HttpPut("{userId}/addrole/{roleId}")]

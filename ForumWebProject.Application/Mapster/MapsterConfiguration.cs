@@ -1,4 +1,6 @@
 ﻿using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Requests;
+using ForumWebProject.Application.Models.Views;
 using ForumWebProject.Infrastructure.Entities;
 using ForumWebProject.Infrastructure.Identity;
 using Mapster;
@@ -38,6 +40,9 @@ public static class MapsterConfiguration
             .IgnoreNullValues(true);
         
         config.ForType<Role, RoleView>()
+            .IgnoreNullValues(false);
+        
+        config.ForType<User, UserView>()
             .IgnoreNullValues(false);
 
         config.ForType<Permission, PermissionView>()

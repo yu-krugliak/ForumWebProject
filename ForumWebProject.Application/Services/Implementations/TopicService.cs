@@ -1,5 +1,7 @@
 ﻿using ForumWebProject.Application.Exceptions;
 using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Requests;
+using ForumWebProject.Application.Models.Views;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Infrastructure.Entities;
 using ForumWebProject.Infrastructure.Repositories.Interfaces;
@@ -11,21 +13,19 @@ namespace ForumWebProject.Application.Services.Implementations
     public class TopicService : ServiceBase<Topic>, ITopicService
     {
         private readonly ITopicRepository _topicRepository;
+        private IPostRepository _postRepository;
         private readonly IMapper _mapper;
-        public TopicService(ITopicRepository topicRepository, IMapper mapper) : base(topicRepository)
+
+        public TopicService(ITopicRepository topicRepository, IMapper mapper, IPostRepository postRepository) : base(topicRepository)
         {
             _topicRepository = topicRepository;
             _mapper = mapper;
+            _postRepository = postRepository;
         }
 
         public async Task<IEnumerable<TopicView>> GetAllTopicsAsync()
         {
             var topics = await _topicRepository.GetAllAsync();
-
-            if (topics is null)
-            {
-                throw new NotFoundException("Topics not found.");
-            }
 
             var topicsViews = _mapper.Map<IEnumerable<TopicView>>(topics);
             return topicsViews;
@@ -34,11 +34,6 @@ namespace ForumWebProject.Application.Services.Implementations
         public async Task<IEnumerable<TopicView>> GetAllTopicsByCategoryIdAsync(Guid topicId)
         {
             var topics = await _topicRepository.GetByCategoryId(topicId);
-
-            if (topics is null)
-            {
-                throw new NotFoundException("Topics in this category not found.");
-            }
 
             var topicsViews = _mapper.Map<IEnumerable<TopicView>>(topics);
             return topicsViews;
@@ -62,11 +57,6 @@ namespace ForumWebProject.Application.Services.Implementations
             }
 
             var addedTopic = await _topicRepository.AddAsync(topic);
-
-            if (addedTopic is null)
-            {
-                throw new ServerErrorException("Can't add this topic.", null);
-            }
 
             return _mapper.Map<TopicView>(addedTopic);
         }
@@ -104,6 +94,17 @@ namespace ForumWebProject.Application.Services.Implementations
             {
                 throw new ServerErrorException("Can't update this topic.", null);
             }
+        }
+        
+        public async Task<PostStatistics> GetPostsStatisticsByTopic(Guid topicId)
+        {
+            var statistics = new PostStatistics()
+            {
+                PostCount = await _postRepository.CountPostsAsync(topicId),
+                LastMessageTime = (await _postRepository.GetLastPostAsync(topicId)).DatePosted,
+            };
+
+            return statistics;
         }
     }
 }

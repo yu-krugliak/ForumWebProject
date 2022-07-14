@@ -1,4 +1,4 @@
-﻿namespace ForumWebProject.Application.Models;
+﻿namespace ForumWebProject.Application.Models.Views;
 
 public class TopicView
 {

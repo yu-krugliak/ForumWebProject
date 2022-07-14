@@ -21,7 +21,7 @@ public class PostSeeder : ICustomSeeder
             {
                 Id = Guid.Parse("e644b4ae-13f5-47d4-858f-dad8e9e9cc22"),
                 Text = "I have a nice cat, and you?",
-                //DatePosted = DateTime.Now,
+                DatePosted = DateTime.UtcNow,
                 UserIdCreated = Guid.Parse("45fcee09-808d-42aa-a49e-985ceceaf9c9"),
                 TopicId = Guid.Parse("17cc2b11-18ea-4ca1-be0a-5b211c25a515"),
             },
@@ -29,7 +29,7 @@ public class PostSeeder : ICustomSeeder
             {
                 Id = Guid.Parse("cab128d9-3886-40a9-afc7-6d8ee91fdd7f"),
                 Text = "Guys????",
-                //DatePosted = DateTime.Now,
+                DatePosted = DateTime.UtcNow,
                 UserIdCreated = Guid.Parse("45fcee09-808d-42aa-a49e-985ceceaf9c9"),
                 TopicId = Guid.Parse("17cc2b11-18ea-4ca1-be0a-5b211c25a515"),
             }

@@ -2,9 +2,12 @@
 using ForumWebProject.Application.Auth;
 using ForumWebProject.Application.Exceptions;
 using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Requests;
+using ForumWebProject.Application.Models.Views;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Infrastructure.Identity;
 using ForumWebProject.Infrastructure.Repositories.Interfaces;
+using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,13 +19,16 @@ public class UserService : IUserService
     private readonly RoleManager<Role> _roleManager;
     private readonly ICurrentUser _currentUser;
     private readonly IPermissionRepository _permissionRepository;
+    private readonly IMapper _mapper;
 
-    public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IPermissionRepository permissionRepository, ICurrentUser currentUser) 
+    public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IPermissionRepository permissionRepository,
+        ICurrentUser currentUser, IMapper mapper) 
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _permissionRepository = permissionRepository;
         _currentUser = currentUser;
+        _mapper = mapper;
     }
 
     public async Task<List<string>> GetPermissionsAsync(string userId, CancellationToken cancellationToken = default)
@@ -114,6 +120,17 @@ public class UserService : IUserService
 
         await _userManager.AddToRoleAsync(user, ForumRoles.User);
     }
+
+    public async Task<UserView> GetUserByEmail(string email)
+    {
+        if (await _userManager.FindByEmailAsync(email.Trim().Normalize()) is not { } user)
+        {
+            throw new NotFoundException("Wrong email or user doesn't exist.");
+        }
+        
+        var userView = _mapper.Map<UserView>(user);
+        return userView;
+    } 
 
     private async Task<Role?> FindRoleByIdAsync(string roleId)
     {

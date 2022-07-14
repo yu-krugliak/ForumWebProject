@@ -1,9 +1,8 @@
-﻿namespace ForumWebProject.Application.Models;
+﻿namespace ForumWebProject.Application.Models.Views;
 
 public class PostView
 {
     public Guid Id { get; set; }
-    public int PostNumber { get; set; }
     
     public string? Text { get; set; }
     public DateTime DatePosted { get; set; }
@@ -18,6 +17,4 @@ public class PostView
     public DateTime UserRegistrationDate { get; set; }
 
     public PostView? ReplyTo { get; set; }
-    // public string? ReplyToUser { get; set; }
-    // public string? ReplyToText { get; set; }
 }

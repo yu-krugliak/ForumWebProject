@@ -1,5 +1,8 @@
 ﻿using ForumWebProject.Application.Auth.Permissions;
 using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Queries;
+using ForumWebProject.Application.Models.Requests;
+using ForumWebProject.Application.Models.Views;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Shared.Authorization.Permissions;
 using Microsoft.AspNetCore.Authorization;
@@ -30,9 +33,9 @@ namespace ForumWebProject.Api.Controllers
         [AllowAnonymous]
         //[MustHavePermission(ForumAction.Read, ForumResource.Posts)]
         [ProducesResponseType(typeof(PostView[]), 200)]
-        public async Task<IActionResult> GetAllPostsByTopic(Guid id)
+        public async Task<IActionResult> GetAllPostsByTopic(Guid id, [FromQuery] PaginationQuery query)
         {
-            return Ok(await _postService.GetAllPostsByTopicIdAsync(id));
+            return Ok(await _postService.GetAllPostsByTopicIdAndSliceAsync(id, query));
         }
         
         [HttpGet("byuser/{id}")]

@@ -1,5 +1,7 @@
 ﻿using ForumWebProject.Application.Auth.Permissions;
 using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Requests;
+using ForumWebProject.Application.Models.Views;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Shared.Authorization.Permissions;
 using Microsoft.AspNetCore.Authorization;
@@ -66,6 +68,13 @@ namespace ForumWebProject.Api.Controllers
         {
             await _topicService.DeleteByTopicIdAsync(topicId);
             return Ok();
+        }
+        
+        [HttpGet("poststatistics/{topicId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPostsStatistics(Guid topicId)
+        {
+            return Ok(await _topicService.GetPostsStatisticsByTopic(topicId));
         }
     }
 }

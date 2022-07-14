@@ -4,6 +4,8 @@ using System.Text;
 using AutoFixture;
 using FluentAssertions;
 using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Requests;
+using ForumWebProject.Application.Models.Views;
 using ForumWebProject.Infrastructure.Context;
 using ForumWebProject.Infrastructure.Entities;
 using Microsoft.Extensions.DependencyInjection;

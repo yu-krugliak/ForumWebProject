@@ -4,6 +4,8 @@ using System.Text;
 using ForumWebProject.Application.Auth.Jwt;
 using ForumWebProject.Application.Exceptions;
 using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Requests;
+using ForumWebProject.Application.Models.Views;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Infrastructure.Identity;
 using ForumWebProject.Shared.Authorization;

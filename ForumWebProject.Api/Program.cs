@@ -64,4 +64,7 @@ app.MapControllers();
 
 app.Run();
 
-public partial class Program {}
+namespace ForumWebProject.Api
+{
+    public partial class Program {}
+}

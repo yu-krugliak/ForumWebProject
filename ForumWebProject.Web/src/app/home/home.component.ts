@@ -1,4 +1,4 @@
-import { LoginFormComponent } from './../login-form/login-form.component';
+import { LoginFormComponent } from '../authentication/login-form/login-form.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CategoryView } from '../api/models/category-view';

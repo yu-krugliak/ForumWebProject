@@ -1,34 +1,33 @@
-<div class="example-action-buttons">
+<div class="expansion-category">
     <button mat-raised-button color="basic" (click)="homePanels.openAll()">Expand All</button>
     <button mat-raised-button color="basic" (click)="homePanels.closeAll()">Collapse All</button>
 </div>
 
-<mat-accordion #homeaccordion="matAccordion" class="example-headers-align" multi>
-  <mat-expansion-panel *ngFor="let category of categories" style="margin-top:11px;">
+<mat-accordion #homeaccordion="matAccordion" class="headers-align" multi>
+  <mat-expansion-panel class="categories" *ngFor="let category of categories">
       <mat-expansion-panel-header>
           <mat-panel-title>
               {{category.name}} 
           </mat-panel-title>
-          <mat-panel-description>
-              {{substr(category.description, 0, 60)}}....
-          <mat-icon>pets</mat-icon>
+          <mat-panel-description class="category-description">
+              {{category.description}}
           </mat-panel-description>
+          <mat-icon class="category-icon">pets</mat-icon>
       </mat-expansion-panel-header>
 
-      <p>
+      <p class="full-description">
         {{category.description}}
       </p>
 
-      <mat-card *ngFor="let topic of category.topics" style="margin-top:11px;" class="topics">
+      <mat-card  *ngFor="let topic of category.topics" style="margin-top:11px;" class="topics">
           <mat-card-header>
               <mat-card-title>
-                <button class="topic-link" mat-stroked-button [routerLink]="['/topic']" [queryParams]="{ id: topic.id }">
+                <button class="topic-link"  [routerLink]="['/topic']" [queryParams]="{ id: topic.id }">
                   {{topic.name}}
                 </button>
               </mat-card-title>
-              <!-- <mat-card-subtitle>ID: {{topic.id}}</mat-card-subtitle> -->
           </mat-card-header>
-          <mat-card-content>
+          <mat-card-content class="topic-content">
               <p>
                   {{topic.description}}
               </p>

@@ -3,6 +3,8 @@ using FluentAssertions;
 using ForumWebProject.Application.Exceptions;
 using ForumWebProject.Application.Mapster;
 using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Requests;
+using ForumWebProject.Application.Models.Views;
 using ForumWebProject.Application.Services.Implementations;
 using ForumWebProject.Infrastructure.Entities;
 using ForumWebProject.Infrastructure.Repositories.Interfaces;

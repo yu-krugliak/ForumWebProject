@@ -2,10 +2,14 @@
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Application.Exceptions;
 using ForumWebProject.Application.Models;
+using ForumWebProject.Application.Models.Queries;
+using ForumWebProject.Application.Models.Requests;
+using ForumWebProject.Application.Models.Views;
 using ForumWebProject.Infrastructure.Entities;
 using ForumWebProject.Infrastructure.Repositories.Interfaces;
 using Mapster;
 using MapsterMapper;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
 
 namespace ForumWebProject.Application.Services.Implementations
 {
@@ -26,11 +30,6 @@ namespace ForumWebProject.Application.Services.Implementations
         {
             var posts = await _postRepository.GetAllAsync();
 
-            if (posts is null)
-            {
-                throw new NotFoundException("Posts not found.");
-            }
-            
             var postsViews = _mapper.Map<IEnumerable<PostView>>(posts);
             return postsViews;
         }
@@ -39,10 +38,13 @@ namespace ForumWebProject.Application.Services.Implementations
         {
             var posts = await _postRepository.GetByTopicId(topicId);
 
-            if (posts is null)
-            {
-                throw new NotFoundException("Posts in this topic not found.");
-            }
+            var postViews = _mapper.Map<IEnumerable<PostView>>(posts);
+            return postViews;
+        }
+        
+        public async Task<IEnumerable<PostView>> GetAllPostsByTopicIdAndSliceAsync(Guid topicId, PaginationQuery query)
+        {
+            var posts = await _postRepository.GetByTopicIdSlice(topicId, query.Offset.Value, query.Count.Value);
             
             var postViews = _mapper.Map<IEnumerable<PostView>>(posts);
             return postViews;
@@ -52,11 +54,6 @@ namespace ForumWebProject.Application.Services.Implementations
         {
             var posts = await _postRepository.GetByUserId(userId);
 
-            if (posts is null)
-            {
-                throw new NotFoundException("Posts for this user not found.");
-            }
-            
             var postViews = _mapper.Map<IEnumerable<PostView>>(posts);
             return postViews;
         }
@@ -76,11 +73,6 @@ namespace ForumWebProject.Application.Services.Implementations
             post.DatePosted = DateTime.UtcNow;
             
             var addedPost = await _postRepository.AddAsync(post);
-
-            if (addedPost is null)
-            {
-                throw new ServerErrorException("Can't add this post.", null);
-            }
 
             return _mapper.Map<PostView>(addedPost);
         }
@@ -124,11 +116,6 @@ namespace ForumWebProject.Application.Services.Implementations
         {
             var posts = await _postRepository.FindByContainingText(textFilter);
 
-            if (posts is null)
-            {
-                throw new NotFoundException("Posts which contain this text not found.");
-            }
-            
             var postViews = _mapper.Map<IEnumerable<PostView>>(posts);
             return postViews;
         }
@@ -137,11 +124,6 @@ namespace ForumWebProject.Application.Services.Implementations
         {
             var posts = await _postRepository.FindByDatePeriod(dateStart, dateEnd);
 
-            if (posts is null)
-            {
-                throw new NotFoundException("Posts in this period of time not found.");
-            }
-            
             var postViews = _mapper.Map<IEnumerable<PostView>>(posts);
             return postViews;
         }

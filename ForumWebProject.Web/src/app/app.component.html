@@ -8,32 +8,37 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <mat-toolbar color="primary">
+
   <button mat-stroked-button color="basic" routerLink="/">FORUM</button>
   <div>
-    <button mat-button routerLink="/">HOME</button>
-    <button mat-button routerLink="/about">ABOUT</button>
+    <button mat-button routerLink="/">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button mat-button routerLink="/about">
+      <mat-icon>info</mat-icon>
+    </button>
   </div>
-  <!-- <div>
-    <button mat-button (click)="openLoginFormWithRedirectParam()">Login</button>
-    <button mat-button (click)="openRegisterFormWithRedirectParam()">Register</button>
-    <button mat-button (click)="logout()">Log Out</button>
-  </div> -->
 
-  <button mat-icon-button [matMenuTriggerFor]="userMenu" aria-label="User Menu" style="margin-left: auto;">
+  <div class="login" *ngIf="!isLogged()">
+    <button mat-button (click)="openLoginFormWithRedirectParam()">Login
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    <button mat-button (click)="openRegisterFormWithRedirectParam()">Register
+      <mat-icon>person_add</mat-icon>
+    </button>
+  </div>
+
+  <button class="menu-button" mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="isLogged()" aria-label="User Menu">
     <mat-icon>more_vert</mat-icon>
   </button>
 
   <mat-menu #userMenu="matMenu">
-    <button mat-menu-item *ngIf="!isLogged()" (click)="openLoginFormWithRedirectParam()">
-      <mat-icon>launch</mat-icon>
-      <span>Log In</span>
+    <button mat-menu-item (click)="openRegisterFormWithRedirectParam()">
+      <mat-icon>account_circle</mat-icon>
+      <span>Account</span>
     </button>
-    <button mat-menu-item *ngIf="!isLogged()"(click)="openRegisterFormWithRedirectParam()">
-      <mat-icon>person_add</mat-icon>
-      <span>Register</span>
-    </button>
-    <button mat-menu-item *ngIf="isLogged()" (click)="logout()">
-      <mat-icon>exit_to_app</mat-icon>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
       <span>Log Out</span>
     </button>
   </mat-menu>

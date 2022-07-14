@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using ForumWebProject.Application.Models.Requests;
 using ForumWebProject.Application.Services.Interfaces;
 using ForumWebProject.Infrastructure.Repositories.Interfaces;
 

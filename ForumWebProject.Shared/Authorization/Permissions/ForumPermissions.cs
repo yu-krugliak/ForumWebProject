@@ -23,6 +23,7 @@ public static class ForumPermissions
         new(ForumAction.Create, ForumResource.Users),
         new(ForumAction.Edit, ForumResource.Users),
         new(ForumAction.Delete, ForumResource.Users),
+        new(ForumAction.Find, ForumResource.Users),
 
         new(ForumAction.Read, ForumResource.Permissions),
         new(ForumAction.Create, ForumResource.Permissions),
@@ -48,6 +49,7 @@ public static class ForumPermissions
 
         new(ForumAction.Read, ForumResource.Users),
         new(ForumAction.Edit, ForumResource.Users),
+        new(ForumAction.Find, ForumResource.Users),
 
         new(ForumAction.Read, ForumResource.Permissions),
 

@@ -2,8 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TokenService } from './api/services';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { RoutesConstants } from './shared/route-constants';
+import { LoginFormComponent } from './authentication/login-form/login-form.component';
+import { RoutesConstants } from './services/route-constants';
 
 @Component({
   selector: 'app-root',
@@ -44,10 +44,9 @@ export class AppComponent {
   }
 
   logout(){
-    localStorage.clear();
-    //window.location.reload();
     var href = this.router.url;
-    this.router.navigateByUrl(href);
+    console.log(href);
+    this.router.navigate([RoutesConstants.LogOut], {queryParams: {redirect: this._redirect ?? href}});
   }
 
   isLogged():boolean{

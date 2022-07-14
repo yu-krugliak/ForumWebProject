@@ -23,13 +23,13 @@ namespace ForumWebProject.Infrastructure.Context.Configurations
             builder.HasMany(category => category.ChildCategories)
                 .WithOne(child => child.ParentCategory)
                 .HasForeignKey(child => child.ParentCategoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.SetNull)
                 .IsRequired(false);
 
             builder.HasMany(category => category.Topics)
                 .WithOne(topic => topic.Category)
                 .HasForeignKey(topic => topic.CategoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.SetNull)
                 .IsRequired(false);
         }
     }
