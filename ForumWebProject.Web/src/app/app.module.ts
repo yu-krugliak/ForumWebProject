@@ -1,4 +1,4 @@
-import { PostEditFormComponent } from './topic/post-edit-form/post-edit-form.component';
+//import { PostEditFormComponent } from './topic/post-editor/
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, Provider, forwardRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -38,7 +38,6 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     LoginFormComponent,
     RegisterFormComponent,
     PostListComponent,
-    PostEditFormComponent,
     WelcomeDialogComponent
   ],
 

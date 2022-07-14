@@ -1,0 +1,18 @@
+mat-card-title {
+    text-align: center;
+}
+
+mat-card-content{
+    height: 50%; 
+    width: 50%;
+}
+
+video{
+    height: 20em; 
+    width: 20em;
+    padding:10px 0px 10px 0px;
+}
+
+.button{
+    align-items: center;
+}

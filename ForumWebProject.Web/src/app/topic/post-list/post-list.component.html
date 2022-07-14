@@ -1,0 +1,58 @@
+<div class="layout">
+
+    <div class="leftcolumn">
+        <div class="post" *ngFor="let post of posts">
+            <div class="post-wrapper user-content">
+                <div class="avatar">
+                </div>
+                <h3>{{post.userName}}</h3>
+                <p>{{post.userFirstName}} {{post.userLastName}}</p>
+                <p>Member since: <br> {{post.userRegistrationDate}}</p>
+            </div>
+            <div class="post-delimeter"></div>
+            <div class="post-wrapper post-content">
+                <div class="post-content-header">
+                    <div class="post-reply" *ngIf="post.replyToPostId">
+                        <p class="replay-username">{{post.replyTo!.userName}}</p>
+                        <span class="post-reply-text">{{post.replyTo!.text}}</span>
+                    </div>
+                    <p class="post-text">{{post.text}}</p>
+                </div>
+                <div class="post-content-footer">
+                    <div class="post-manage-buttons">
+                        <button *ngIf="this.permissionsManager.hasPermission('Permission.Posts.Create')" class="post-button" (click)="reply(post)"><mat-icon>reply</mat-icon><span></span></button>
+                        <button *ngIf="this.permissionsManager.hasPermission('Permission.Posts.Edit')" class="post-button" (click)="reply(post)"><mat-icon>edit</mat-icon><span></span></button>
+                        <button *ngIf="this.permissionsManager.hasPermission('Permission.Posts.Delete')" class="post-button" (click)="delete(post.id!)"><mat-icon>delete</mat-icon><span></span></button>
+                    </div>
+                    <div class="post-metadata">{{post.datePosted}}</div>
+                </div>
+            </div>
+        </div>    
+
+        <div *ngIf="this.permissionsManager.hasPermission('Permission.Posts.Create')" class="post-add">
+            <div class="post-reply" *ngIf="_replyToPost">
+                <p class="replay-username">{{_replyToPost.userName}} <button class="close-reply" (click)="closeReply()"><mat-icon>close</mat-icon></button></p>
+                <span class="post-reply-text">{{_replyToPost.text}}</span>
+            </div>
+            <mat-form-field class="add-post" appearance="fill" id="post-input">
+                <mat-label style="color: white">Add a new post:)</mat-label>
+                <textarea  id="new-post-text" matInput placeholder="Hello 👋"></textarea>
+            </mat-form-field>
+            <button mat-stroked-button color="primary" (click)="send()">Send</button>
+        </div>
+
+        <div *ngIf="this.permissionsManager?.hasPermission('Permission.Posts.Create')===false" class="post-add">
+            <mat-form-field class="add-post" readonly appearance="fill" id="post-input">
+                <mat-label style="color: white">To add a new post, please login:)</mat-label>
+                <textarea  id="new-post-text" matInput placeholder="Hello 👋"></textarea>
+            </mat-form-field>
+            <button mat-stroked-button color="primary" [disabled]="true">Send</button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="footer">
+    <img src="assets/img/neko_hello.png" alt="neko">
+</div>

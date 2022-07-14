@@ -1,0 +1,35 @@
+<mat-card>
+    <mat-card-title>Login</mat-card-title>
+<mat-card-content>
+<form [formGroup]="form" (ngSubmit)="submit()" #loginFrom="ngForm">
+  <p>
+    <mat-form-field>
+      <input type="email" matInput placeholder="Email" formControlName="email">
+      <small *ngIf="form.get('email')?.hasError('required')">Email is required</small>
+      <!-- <small *ngIf="form.get('email')?.valid()">Please provide a valid email address</small> -->
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field>
+      <input type="password" matInput placeholder="Password" formControlName="password">
+      <small *ngIf="form.get('password')?.hasError('required')">Password is required</small>
+      <p *ngIf="form.get('password')?.hasError('invalid')">Invalid login or password</p>
+    </mat-form-field>
+  </p>
+
+  <p *ngIf="error" class="error">
+    {{ error }}
+  </p>
+
+  <div class="button">
+    <p *ngIf="form.get('password')?.hasError('invalid')">Invalid login or password</p>
+    <button type="submit" mat-raised-button color="primary">Login</button>
+    <button type="button" mat-button (click)="switchToRegister()">Register</button>
+  </div>
+
+</form>
+</mat-card-content>
+</mat-card>
+
+<router-outlet></router-outlet>
