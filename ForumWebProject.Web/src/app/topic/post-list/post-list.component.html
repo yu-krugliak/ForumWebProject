@@ -20,9 +20,9 @@
                 </div>
                 <div class="post-content-footer">
                     <div class="post-manage-buttons">
-                        <button *ngIf="this.permissionsManager.hasPermission('Permission.Posts.Create')" class="post-button" (click)="reply(post)"><mat-icon>reply</mat-icon><span></span></button>
-                        <button *ngIf="this.permissionsManager.hasPermission('Permission.Posts.Edit')" class="post-button" (click)="reply(post)"><mat-icon>edit</mat-icon><span></span></button>
-                        <button *ngIf="this.permissionsManager.hasPermission('Permission.Posts.Delete')" class="post-button" (click)="delete(post.id!)"><mat-icon>delete</mat-icon><span></span></button>
+                        <button *hasPermission="'Permission.Posts.Create'" class="post-button" (click)="reply(post)"><mat-icon>reply</mat-icon><span></span></button>
+                        <button *hasPermission="'Permission.Posts.Edit'" class="post-button" (click)="reply(post)"><mat-icon>edit</mat-icon><span></span></button>
+                        <button *hasPermission="'Permission.Posts.Delete'" class="post-button" (click)="delete(post.id!)"><mat-icon>delete</mat-icon><span></span></button>
                     </div>
                     <div class="post-metadata">{{post.datePosted}}</div>
                 </div>

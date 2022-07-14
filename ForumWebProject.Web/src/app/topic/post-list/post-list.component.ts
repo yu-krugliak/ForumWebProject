@@ -5,6 +5,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PermissionsManager } from '../../services/permissions-service';
+import { HasPermissionDirective } from 'src/app/directives/permission-directive';
 
 @Component({
   selector: 'app-post-list',

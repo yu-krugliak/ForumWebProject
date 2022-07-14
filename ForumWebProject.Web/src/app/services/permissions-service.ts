@@ -15,6 +15,11 @@ export class PermissionsManager{
     public hasPermission(permission: string) : boolean{
         return this.permissions.includes(permission);
     }
+
+    public clear(){
+        this.permissions = [];
+        localStorage.removeItem('permissions');
+    }
     constructor(){
         console.log('Permissions manager created!');
         this.permissions = JSON.parse(localStorage.getItem('permissions') ?? '[]');

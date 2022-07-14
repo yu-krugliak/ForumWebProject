@@ -1,3 +1,4 @@
+import { HasPermissionDirective } from './directives/permission-directive';
 //import { PostEditFormComponent } from './topic/post-editor/
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, Provider, forwardRef } from '@angular/core';
@@ -38,7 +39,9 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     LoginFormComponent,
     RegisterFormComponent,
     PostListComponent,
-    WelcomeDialogComponent
+    WelcomeDialogComponent,
+
+    HasPermissionDirective
   ],
 
   imports: [
