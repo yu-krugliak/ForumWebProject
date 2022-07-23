@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, Provider, forwardRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +23,7 @@ import { RegisterFormComponent } from './authentication/register-form/register-f
 import { WelcomeDialogComponent } from './authentication/welcome-dialog/welcome-dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { PermissionsManager } from './services/permissions-service';
+import { PostEditorComponent } from './topic/post-editor/post-editor.component';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -39,6 +40,7 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     LoginFormComponent,
     RegisterFormComponent,
     PostListComponent,
+    PostEditorComponent,
     WelcomeDialogComponent,
 
     HasPermissionDirective
@@ -47,9 +49,9 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
   imports: [
     AppRoutingModule,
     HttpClientModule,
-    ApiModule.forRoot({rootUrl: 'http://localhost:15891'}),
+    ApiModule.forRoot({rootUrl: 'http://localhost:5069'}),
 
-    BrowserModule, ReactiveFormsModule, MaterialModule, BrowserAnimationsModule,
+    BrowserModule, ReactiveFormsModule, MaterialModule, BrowserAnimationsModule, FormsModule
   ],
   
   providers: [

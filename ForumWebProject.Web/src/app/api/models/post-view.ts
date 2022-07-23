@@ -8,7 +8,7 @@ export interface PostView {
 
   topicId?: string;
   userIdCreated?: string;
-  replyToPostId?: null | string;
+  replyToPostId?: undefined | string;
 
   userName?: string;
   userFirstName?: string;
@@ -17,5 +17,5 @@ export interface PostView {
 
   // replyToUser?: null | string;
   // replyToText?: null | string;
-  replyTo: PostView | null;
+  replyTo?: PostView | null;
 }

@@ -5,3 +5,14 @@
 .menu-button{
     margin-left: auto;
 }
+
+.footer{
+    margin: 0;
+    width: 100%;
+    background-color: var(--dark-panel);
+    border-top: solid 1px var(--dark-border);
+}
+
+.footer img{
+    height: 250px;
+}

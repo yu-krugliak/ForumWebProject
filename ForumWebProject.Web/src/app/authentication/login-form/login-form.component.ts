@@ -11,6 +11,7 @@ import { WelcomeDialogComponent } from '../welcome-dialog/welcome-dialog.compone
 import { StrictHttpResponse } from '../../api/strict-http-response';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PermissionsManager } from '../../services/permissions-service';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
@@ -57,9 +58,11 @@ export class LoginFormComponent {
 
         if(r.status == 200){
           this.setToken(r.body);
-          this.setPermissions();
-          console.log(this._redirect);
-          this.router.navigateByUrl(this._redirect ?? RoutesConstants.Home);
+          this.setPermissions().subscribe(() =>{
+            console.log(this._redirect);
+            
+            this.router.navigateByUrl(this._redirect ?? RoutesConstants.Home);
+          });
         }
 
       },
@@ -82,10 +85,10 @@ export class LoginFormComponent {
     this.openWelcomeDialog('300ms', '300ms');
   }
 
-  setPermissions(){
-    this.usersService.apiUsersPermissionsGet$Json().subscribe((perms: string[]) => {
+  setPermissions() : Observable<void>{
+    return this.usersService.apiUsersPermissionsGet$Json().pipe(map((perms: string[]) => {
       this.permissionsManager.setPermissions(perms);
-    })
+    }));
   }
 
   openWelcomeDialog(enterAnimationDuration: string, exitAnimationDuration: string){

@@ -2,6 +2,7 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { RoutesConstants } from './route-constants';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
@@ -35,6 +36,11 @@ export class ApiInterceptor implements HttpInterceptor {
           } else {
               console.log('This is server side error');
               errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
+
+              if(error.status == 401){
+                var href = this.router.url;
+                this.router.navigate([RoutesConstants.Login], {queryParams: {redirect: href}});
+              }
           }
           console.log(errorMsg);
           return throwError(() => error.error.messages);

@@ -1,1 +1,19 @@
-<p>post-editor works!</p>
+<div class="post-add">
+    <div class="post-reply" *ngIf="post && post.replyTo">
+        <p class="replay-username">{{post.replyTo.userName}} 
+            <button *ngIf="!post.id"class="close-reply" (click)="closeReply()">
+                <mat-icon>close</mat-icon>
+            </button></p>
+        <span class="post-reply-text">{{post.replyTo.text}}</span>
+    </div>
+    <mat-form-field class="add-post" appearance="fill" id="post-input">
+        <mat-label style="color: white">
+            {{!post?.id ? "Add a new post:)" : "Now you can edit your post:)"}}
+        </mat-label>
+        <textarea [(ngModel)]="post!.text" id="new-post-text" matInput placeholder="Hello 👋"></textarea>
+    </mat-form-field>
+    <div class="buttons">
+        <button *ngIf="post?.id" mat-stroked-button id="stop-editing" (click)="stopEditing()">Cancel <mat-icon>close</mat-icon></button>
+        <button mat-stroked-button id="submit" color="primary" (click)="sendPostToParent()">{{!post?.id ? "Send" : "Edit"}}</button>
+    </div>
+</div>

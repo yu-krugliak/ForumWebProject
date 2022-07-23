@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { PostRequest } from './../../api/models/post-request';
 import { PostsService } from './../../api/services/posts.service';
 import { PostView } from './../../api/models/post-view';
@@ -14,7 +15,8 @@ import { HasPermissionDirective } from 'src/app/directives/permission-directive'
 })
 export class PostListComponent implements OnInit {
   private _topicId!: string;
-  _replyToPost: PostView | undefined;
+
+  protected post: PostView = {};
 
   posts : PostView[] = [];
 
@@ -39,36 +41,51 @@ export class PostListComponent implements OnInit {
   }
 
   reply(replyToPost: PostView | undefined){
-    const inputElement = (<HTMLInputElement>document.getElementById("new-post-text"));
-    inputElement.focus({preventScroll: true});
-    inputElement.scrollIntoView({
-      behavior: "smooth"
-    });
-    this._replyToPost = replyToPost;
+    this.smoothScrollToInput();
+
+    this.post.replyTo = replyToPost;
+    this.post.replyToPostId = replyToPost?.id;
+    console.log(this.post);
   }
 
   closeReply(){
-    this._replyToPost = undefined;
+    this.post.replyToPostId = undefined;
+    this.post.replyTo = undefined;
   }
 
   send() : void{
-    const inputElement = (<HTMLInputElement>document.getElementById("new-post-text"));
     let request: PostRequest = ({
-      text: inputElement.value,
+      text: this.post.text,
       topicId: this._topicId,
-      replyToPostId: this._replyToPost?.id,
+      replyToPostId: this.post.replyToPostId,
     });
 
-    inputElement.value = '';
+    if(!this.post.id){
+      this.addNewPost(request);
+    }
+    else{
+      this.editPost(request);
+    }
+
+    this.post = {};
+  }
+
+  private addNewPost(request: PostRequest) {
+    console.log(this.post);
+
+    this.postsService.apiPostsPost$Json({ body: request }).subscribe((data: PostView) => {
+      console.log(data);
+      this.refresh();
+    });
+  }
+
+  private editPost(request: PostRequest) {
     console.log(request);
 
-    this.postsService.apiPostsPost$Json({body: request}).subscribe((data: PostView) =>{
-        console.log(data);
-        this.refresh();
+    this.postsService.apiPostsPostIdPut$Response({postId: this.post.id!, body:request}).subscribe(() => {
+      console.log("editing...");
+      this.refresh();
     });
-    
-    this._replyToPost = undefined;
-    inputElement.scrollIntoView();
   }
 
   delete(postIdToDelete: string){
@@ -77,7 +94,29 @@ export class PostListComponent implements OnInit {
       this.refresh();
     });
 
+    if(this.post.id === postIdToDelete){
+      this.post = {};
+    }
+
+    if(this.post.replyToPostId === postIdToDelete){
+      this.post.replyTo = undefined;
+      this.post.replyToPostId = undefined;
+    }
+
     this.openSnackBar("Post has been deleted😢", "Thanks");
+  }
+
+  edit(postToEdit: PostView){
+    this.smoothScrollToInput();
+    this.post = {...postToEdit};
+  }
+
+  smoothScrollToInput(){
+    const inputElement = (<HTMLInputElement>document.getElementById("new-post-text"));
+    inputElement.focus({preventScroll: true});
+    inputElement.scrollIntoView({
+      behavior: "smooth"
+    });
   }
 
   openSnackBar(message: string, action: string) {
