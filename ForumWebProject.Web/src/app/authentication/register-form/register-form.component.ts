@@ -67,7 +67,7 @@ export class RegisterFormComponent {
   }
   
   openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action);
+    this.snackBar.open(message, action, {duration: 5000});
   }
 
   @Input() error: string | null = '';

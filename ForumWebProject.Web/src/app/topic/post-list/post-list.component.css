@@ -169,6 +169,27 @@
     background-color: var(--dark-border);
 }
 
+.footer{
+    margin: 0;
+    width: 100%;
+    background-color: var(--dark-panel);
+    border-top: solid 1px var(--dark-border);
+}
+
+.footer img{
+    height: 250px;
+} 
+
+.container-footer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+.copyright{
+    text-align: center;
+    color: var(--dark-secondary-font);
+}
+
 @media screen and (max-width: 600px) {
     .post{
         flex-direction: column;

@@ -6,48 +6,47 @@
 <!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-<mat-toolbar color="primary">
-
-  <button mat-stroked-button color="basic" routerLink="/">FORUM</button>
-  <div>
-    <button mat-button routerLink="/">
-      <mat-icon>home</mat-icon>
+<body>
+  <mat-toolbar color="primary">
+  
+    <button mat-stroked-button color="basic" routerLink="/">FORUM</button>
+    <div>
+      <button mat-button routerLink="/">
+        <mat-icon>home</mat-icon>
+      </button>
+      <button mat-button routerLink="/about">
+        <mat-icon>info</mat-icon>
+      </button>
+    </div>
+  
+    <div class="login" *ngIf="!isLogged()">
+      <button mat-button (click)="openLoginFormWithRedirectParam()">Login
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+      <button mat-button (click)="openRegisterFormWithRedirectParam()">Register
+        <mat-icon>person_add</mat-icon>
+      </button>
+    </div>
+  
+    <button class="menu-button" mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="isLogged()" aria-label="User Menu">
+      <mat-icon>more_vert</mat-icon>
     </button>
-    <button mat-button routerLink="/about">
-      <mat-icon>info</mat-icon>
-    </button>
-  </div>
-
-  <div class="login" *ngIf="!isLogged()">
-    <button mat-button (click)="openLoginFormWithRedirectParam()">Login
-      <mat-icon>exit_to_app</mat-icon>
-    </button>
-    <button mat-button (click)="openRegisterFormWithRedirectParam()">Register
-      <mat-icon>person_add</mat-icon>
-    </button>
-  </div>
-
-  <button class="menu-button" mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="isLogged()" aria-label="User Menu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
-
-  <mat-menu #userMenu="matMenu">
-    <button mat-menu-item (click)="openRegisterFormWithRedirectParam()">
-      <mat-icon>account_circle</mat-icon>
-      <span>Account</span>
-    </button>
-    <button mat-menu-item (click)="logout()">
-      <mat-icon>logout</mat-icon>
-      <span>Log Out</span>
-    </button>
-  </mat-menu>
-
-</mat-toolbar>
-
-<footer></footer>
-
-<router-outlet></router-outlet>
+  
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="openRegisterFormWithRedirectParam()">
+        <mat-icon>account_circle</mat-icon>
+        <span>Account</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Log Out</span>
+      </button>
+    </mat-menu>
+  
+  </mat-toolbar>
+  
+  <router-outlet></router-outlet>
+</body>
 <!-- 
 <div class="footer">
   <img src="assets/img/neko_hello.png" alt="neko">

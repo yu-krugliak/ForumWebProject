@@ -12,6 +12,16 @@
     --dark-panel: rgba(33, 33, 33, 0.95); 
     --dark-element: rgba(50, 50, 50);
 }
+html {
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+    background-color: var(--dark-panel);
+ }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: var(--dark-panel);}
+body {
+    min-height: 100%; 
+    margin: 0; 
+    font-family: Roboto, 
+    "Helvetica Neue", sans-serif;
+}
