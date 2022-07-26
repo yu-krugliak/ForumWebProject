@@ -12,6 +12,7 @@ import { StrictHttpResponse } from '../../api/strict-http-response';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PermissionsManager } from '../../services/permissions-service';
 import { map, Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login-form',
@@ -24,7 +25,7 @@ export class LoginFormComponent {
   logedFlag: boolean = false;
 
   constructor(private tokenService: TokenService, private usersService: UsersService, private permissionsManager: PermissionsManager,
-     private dialog: MatDialog, private route: ActivatedRoute, private router: Router){}
+     private dialog: MatDialog, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
     this.route.queryParams
@@ -73,6 +74,7 @@ export class LoginFormComponent {
       // }
         this.form.controls['password'].setErrors({'incorrect': true});
         console.log("invalid");
+        this.openSnackBar("Wrong email or password. Try again.", "Try");
       }
     });
   }
@@ -80,7 +82,8 @@ export class LoginFormComponent {
   setToken(tokenResponse: TokenResponse){
     localStorage.setItem("token", tokenResponse.token);
     localStorage.setItem("expiryTime", tokenResponse.expiryTime);
-
+    localStorage.setItem("email", this.form.controls['email'].value);
+    
     this.logedFlag = true;
     this.openWelcomeDialog('300ms', '300ms');
   }
@@ -106,6 +109,10 @@ export class LoginFormComponent {
 
   switchToRegister(){
     this.router.navigate([RoutesConstants.Register], {queryParams: {redirect: this._redirect}});
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {duration: 5000});
   }
 
   @Input() error: string | null = '';

@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { RegisterRequest } from '../../api/models';
 import { UsersService } from '../../api/services';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -17,11 +17,13 @@ export class RegisterFormComponent {
   private _redirect: string = '';
 
   form: FormGroup = new FormGroup({
-    email: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, 
+      Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
     username : new FormControl('', Validators.required),
     firstname : new FormControl('', Validators.required),
     lastname : new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    password: new FormControl('', [Validators.required, 
+      Validators.pattern("[0-9a-zA-Z!@#$%^&*]{6,}")]), 
     confirmpassword : new FormControl('', Validators.required),
   });
 
@@ -36,6 +38,17 @@ export class RegisterFormComponent {
     });
   }
 
+  onPasswordChange() {
+    var password = this.form.controls["password"];
+    var confirmPassword = this.form.controls["confirmpassword"];
+
+    if (password.value == confirmPassword.value) {
+      confirmPassword.setErrors({ mismatch: false });
+    } else {
+      confirmPassword.setErrors({ mismatch: true });
+    }
+  }
+
   send() : void{
 
     let request: RegisterRequest = ({
@@ -44,7 +57,7 @@ export class RegisterFormComponent {
       firstName: this.form.controls["firstname"].value,
       lastName: this.form.controls["lastname"].value,
       password: this.form.controls["password"].value,
-      confirmPassword: this.form.controls["confirmpassword"].value  ,
+      confirmPassword: this.form.controls["confirmpassword"].value,
     });
 
     console.log(request);

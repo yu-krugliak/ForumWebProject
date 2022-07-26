@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import{ MatMenuModule } from '@angular/material/menu';
+import { MatStepperModule } from '@angular/material/stepper'
 
 const modules = [
   MatCardModule,
@@ -27,7 +28,8 @@ const modules = [
   MatFormFieldModule,
   MatDatepickerModule,
   MatSnackBarModule,
-  MatMenuModule
+  MatMenuModule,
+  MatStepperModule
 ];
 
 @NgModule({

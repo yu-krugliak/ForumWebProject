@@ -1,0 +1,9 @@
+
+mat-stepper{
+    margin-top:11px;
+    background-color: var(--dark-element);
+}
+
+.info-input{
+    color: #D3C1D2;
+}

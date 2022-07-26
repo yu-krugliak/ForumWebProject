@@ -1,0 +1,48 @@
+<div class="expansion-category">
+    <button mat-raised-button color="basic" (click)="homePanels.openAll()">Expand All</button>
+    <button mat-raised-button color="basic" (click)="homePanels.closeAll()">Collapse All</button>
+    <button mat-raised-button *hasPermission="'Permission.Categories.Create'" class="cat-add-button" (click)="addCategory()"><mat-icon>add</mat-icon><span></span></button>
+</div>
+
+<app-category-stepper *hasPermission="'Permission.Categories.Create'" (send)="send()" [category]="category" [addCatFlag]="addCatFlag"></app-category-stepper>
+
+<mat-accordion #homeaccordion="matAccordion" class="headers-align" multi>
+  <mat-expansion-panel class="categories" *ngFor="let category of categories">
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+              {{category.name}} 
+          </mat-panel-title>
+          <mat-panel-description class="category-description">
+              {{category.description}}
+          </mat-panel-description>
+          <div class="cat-manage-buttons">
+            <button *hasPermission="'Permission.Categories.Edit'" class="cat-button" (click)="edit(category)"><mat-icon>edit</mat-icon><span></span></button>
+            <button *hasPermission="'Permission.Categories.Delete'" class="cat-button" (click)="deleteCategory(category.id!)"><mat-icon>delete</mat-icon><span></span></button>
+          </div>
+      </mat-expansion-panel-header>
+
+      <p class="full-description">
+        {{category.description}}
+        <!-- <button mat-raised-button *hasPermission="'Permission.Topics.Create'" class="topic-add-button" (click)="addTopic()"><mat-icon>add</mat-icon><span></span></button> -->
+        <!-- <button mat-raised-button *hasPermission="'Permission.Topics.Delete'" class="topic-add-button" (click)="deleteTopic(topic.id!)"><mat-icon>delete</mat-icon><span></span></button> -->
+      </p>
+      <!-- <app-category-stepper *hasPermission="'Permission.Topics.Create'" *ngIf="topic.id===this.topic.id"  (send)="send()" [topic]="topic" [addTopicFlag]="addTopicFlag"></app-category-stepper> -->
+
+      
+      <mat-card  *ngFor="let topic of category.topics" style="margin-top:11px;" class="topics">
+          <mat-card-header>
+              <mat-card-title>
+                <button class="topic-link"  [routerLink]="['/topic']" [queryParams]="{ id: topic.id }">
+                  {{topic.name}}
+                </button>
+              </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="topic-content">
+              <p>
+                  {{topic.description}}
+              </p>
+          </mat-card-content>
+      </mat-card>
+
+  </mat-expansion-panel>
+</mat-accordion>

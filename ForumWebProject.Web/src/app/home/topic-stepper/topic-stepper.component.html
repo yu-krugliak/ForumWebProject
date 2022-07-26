@@ -1,0 +1,37 @@
+<mat-stepper linear #stepper *ngIf="category && category.id || addCatFlag || addTopicFlag">
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>{{addTopicFlag? "Type topic name" : "Type category name"}}</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input class="info-input" [(ngModel)]="category!.name" matInput formControlName="name" placeholder="Enter name" required>
+        </mat-form-field>
+        <div>
+          <button mat-button color="primary" matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>{{addTopicFlag? "Type topic description" : "Type category description"}}</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Description</mat-label>
+          <input class="info-input" [(ngModel)]="category!.description" matInput formControlName="desc" placeholder="Enter description"
+                 required>
+        </mat-form-field>
+        <div>
+          <button mat-button color="primary" matStepperPrevious>Back</button>
+          <button mat-button color="primary" matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p class="info-input">You are now done.</p>
+      <div>
+        <button mat-button color="primary" matStepperPrevious>Back</button>
+        <button mat-button color="primary" (click)="stopEditing()">Cancel</button>
+        <button mat-button color="primary" (click)="sendPostToParent()">Confirm</button>
+      </div>
+    </mat-step>
+</mat-stepper>

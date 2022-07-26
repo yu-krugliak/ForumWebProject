@@ -1,0 +1,139 @@
+:host{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px auto;
+  width: 95%;
+}
+
+.cat-add-button{
+  /* text-align: right;
+  vertical-align: text-top; */
+  padding: 4px 5px;
+  color: var(--dark-secondary-font);
+  background-color: var(--dark-element);
+  border: solid 2px var(--dark-border);
+  border-radius: 3px;
+  font-size: 11px;
+  margin: 2px;
+  float: right;
+  width: 24px !important;
+  height: 35px !important;
+  line-height: 24px !important;
+}
+
+.cat-add-button mat-icon{
+  font-size: 24px;
+  height: 24px;
+}
+
+.topic-add-button{
+  /* text-align: right;
+  vertical-align: text-top; */
+  padding: 4px 5px;
+  color: var(--dark-secondary-font);
+  background-color: var(--dark-element);
+  border: solid 2px var(--dark-border);
+  border-radius: 3px;
+  font-size: 11px;
+  margin: 2px;
+  float: right;
+  width: 24px !important;    
+  height: 25px !important;
+  line-height: 14px !important;
+  margin-left: auto;
+}
+
+.topic-add-button mat-icon{
+  font-size: 14px;
+  height: 14px;
+}
+
+.expansion-category {
+  margin-left: auto;
+}
+
+.expansion-category > *{
+  margin-left: 5px;
+}
+  
+.headers-align{
+  flex-basis: 0;
+}
+
+.categories{
+  margin-top:11px;
+  background-color: var(--dark-element);
+}
+
+mat-card.category{
+  background-color: #616161;
+}
+
+mat-panel-description.category-description{
+  display: inline-block;
+  text-overflow: ellipsis;
+  align-self: center;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #D3C1D2;
+}
+
+mat-icon.category-icon{
+  margin-left: auto;
+  overflow: visible;
+  margin: 15px;
+}
+
+mat-expansion-panel-content{
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+.cat-manage-buttons{
+  margin-right: 20px;
+  display: inherit;
+}
+
+.cat-button{
+  /* text-align: right;
+  vertical-align: text-top; */
+  padding: 6px 20px;
+  color: var(--dark-secondary-font);
+  background-color: var(--dark-element);
+  border: solid 2px var(--dark-border);
+  border-radius: 3px;
+  font-size: 11px;
+  margin: 2px;
+}
+
+.cat-button *{
+  /* margin: auto 0; */
+  vertical-align: middle;
+}
+
+.cat-button:hover{
+  background-color: var(--dark-border);
+}
+
+.full-description{
+  color: #D3C1D2;
+  display: flex;
+}
+
+mat-card-content.topic-content  > *{
+  margin-left: 20px;
+  color: #D3D0CB;
+}
+
+mat-card button.topic-link{
+  font-size: 1.4rem;
+  margin: 0; 
+  background-color: transparent;
+  border: none;
+  color: var(--dark-primary-font);
+}
+
+mat-card button.topic-link:hover{
+  color: #9f29d2;
+}

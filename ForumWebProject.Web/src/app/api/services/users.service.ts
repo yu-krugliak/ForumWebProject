@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 import { RegisterRequest } from '../models/register-request';
+import { UserView } from '../models/user-view';
 
 @Injectable({
   providedIn: 'root',
@@ -247,4 +248,94 @@ export class UsersService extends BaseService {
     );
   }
 
+
+    /**
+   * Path part for operation apiUsersEmailEmailGet
+   */
+     static readonly ApiUsersEmailEmailGetPath = '/api/Users/email/{email}';
+
+     /**
+      * This method provides access to the full `HttpResponse`, allowing access to response headers.
+      * To access only the response body, use `apiUsersEmailEmailGet$Plain()` instead.
+      *
+      * This method doesn't expect any request body.
+      */
+     apiUsersEmailEmailGet$Plain$Response(params: {
+       email: string;
+     }): Observable<StrictHttpResponse<UserView>> {
+   
+       const rb = new RequestBuilder(this.rootUrl, UsersService.ApiUsersEmailEmailGetPath, 'get');
+       if (params) {
+         rb.path('email', params.email, {});
+       }
+   
+       return this.http.request(rb.build({
+         responseType: 'text',
+         accept: 'text/plain'
+       })).pipe(
+         filter((r: any) => r instanceof HttpResponse),
+         map((r: HttpResponse<any>) => {
+           return r as StrictHttpResponse<UserView>;
+         })
+       );
+     }
+   
+     /**
+      * This method provides access to only to the response body.
+      * To access the full response (for headers, for example), `apiUsersEmailEmailGet$Plain$Response()` instead.
+      *
+      * This method doesn't expect any request body.
+      */
+     apiUsersEmailEmailGet$Plain(params: {
+       email: string;
+     }): Observable<UserView> {
+   
+       return this.apiUsersEmailEmailGet$Plain$Response(params).pipe(
+         map((r: StrictHttpResponse<UserView>) => r.body as UserView)
+       );
+     }
+   
+     /**
+      * This method provides access to the full `HttpResponse`, allowing access to response headers.
+      * To access only the response body, use `apiUsersEmailEmailGet$Json()` instead.
+      *
+      * This method doesn't expect any request body.
+      */
+     apiUsersEmailEmailGet$Json$Response(params: {
+       email: string;
+     }): Observable<StrictHttpResponse<UserView>> {
+   
+       const rb = new RequestBuilder(this.rootUrl, UsersService.ApiUsersEmailEmailGetPath, 'get');
+       if (params) {
+         rb.path('email', params.email, {});
+       }
+   
+       return this.http.request(rb.build({
+         responseType: 'json',
+         accept: 'text/json'
+       })).pipe(
+         filter((r: any) => r instanceof HttpResponse),
+         map((r: HttpResponse<any>) => {
+           return r as StrictHttpResponse<UserView>;
+         })
+       );
+     }
+   
+     /**
+      * This method provides access to only to the response body.
+      * To access the full response (for headers, for example), `apiUsersEmailEmailGet$Json$Response()` instead.
+      *
+      * This method doesn't expect any request body.
+      */
+     apiUsersEmailEmailGet$Json(params: {
+       email: string;
+     }): Observable<UserView> {
+   
+       return this.apiUsersEmailEmailGet$Json$Response(params).pipe(
+         map((r: StrictHttpResponse<UserView>) => r.body as UserView)
+       );
+     }
+
 }
+
+

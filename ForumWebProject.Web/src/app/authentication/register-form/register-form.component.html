@@ -5,45 +5,52 @@
   <p>
     <mat-form-field>
       <input type="email" matInput placeholder="Email" formControlName="email">
+      <small class="alert" *ngIf="form.get('email')?.hasError('required')">Email is required</small>
+      <small class="alert" *ngIf="form.get('email')?.hasError('pattern')">Please provide a valid email address</small>
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field>
       <input type="text" matInput placeholder="UserName" formControlName="username">
+      <small class="alert" *ngIf="form.get('username')?.hasError('required')">User Name is required</small>
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field>
       <input type="text" matInput placeholder="FirstName" formControlName="firstname">
+      <small class="alert" *ngIf="form.get('firstname')?.hasError('required')">First Name is required</small>
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field>
       <input type="text" matInput placeholder="LastName" formControlName="lastname">
+      <small class="alert" *ngIf="form.get('lastname')?.hasError('required')">Last Name is required</small>
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field>
-      <input type="password" matInput placeholder="Password" formControlName="password">
+      <input type="password" matInput placeholder="Password" (change)="onPasswordChange()" formControlName="password">
+      <small class="alert" *ngIf="form.get('password')?.hasError('pattern')">Password must contain 6 or more symbols</small>
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field>
-      <input type="password" matInput placeholder="ConfirmPassword" formControlName="confirmpassword">
+      <input type="password" matInput placeholder="ConfirmPassword" (change)="onPasswordChange()" formControlName="confirmpassword">
+      <small class="alert" *ngIf="form.get('confirmpassword')?.hasError('mismatch')">Password do not match.</small>
     </mat-form-field>
   </p>
 
-  <p *ngIf="error" class="error">
+  <!-- <p *ngIf="error" class="error">
     {{ error }}
-  </p>
+  </p> -->
 
   <div class="button">
-    <button type="submit" mat-button (click)="send()">Submit</button>
+    <button type="submit" [disabled]="form.get('email')?.hasError('required') || form.get('email')?.hasError('pattern') || form.get('username')?.hasError('required') || form.get('firstname')?.hasError('required') || form.get('lastname')?.hasError('required')  || form.get('password')?.hasError('pattern') || form.get('confirmpassword')?.hasError('mismatch')" mat-button (click)="send()">Submit</button>
   </div>
 
 </form>

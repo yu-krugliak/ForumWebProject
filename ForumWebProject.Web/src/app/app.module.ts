@@ -10,9 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import HomeComponent from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { PostListComponent } from './topic/post-list/post-list.component';
+import HomeComponent from './home/home-categories/home.component';
+import { CategoryStepperComponent } from './home/category-stepper/category-stepper.component';
 
 import { MaterialModule } from './material.module';
 
@@ -24,6 +25,8 @@ import { WelcomeDialogComponent } from './authentication/welcome-dialog/welcome-
 import { MatDialogRef } from '@angular/material/dialog';
 import { PermissionsManager } from './services/permissions-service';
 import { PostEditorComponent } from './topic/post-editor/post-editor.component';
+import { TopicStepperComponent } from './home/topic-stepper/topic-stepper.component';
+import { UserCardComponent } from './user-card/user-card.component';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -42,6 +45,9 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     PostListComponent,
     PostEditorComponent,
     WelcomeDialogComponent,
+    CategoryStepperComponent,
+    TopicStepperComponent,
+    UserCardComponent,
 
     HasPermissionDirective
   ],
