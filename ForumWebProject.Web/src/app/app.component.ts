@@ -46,7 +46,7 @@ export class AppComponent {
   logout(){
     var href = this.router.url;
     console.log(href);
-    this.router.navigate([RoutesConstants.LogOut], {queryParams: {redirect: this._redirect ?? href}});
+    this.router.navigate([RoutesConstants.LogOut], {queryParams: {redirect: RoutesConstants.Home}});
   }
 
   isLogged():boolean{

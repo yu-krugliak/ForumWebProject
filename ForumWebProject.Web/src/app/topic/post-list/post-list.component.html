@@ -1,9 +1,9 @@
 <div class="layout">
-
     <div class="leftcolumn">
-        <div class="post" *ngFor="let post of posts">
+        <div class="post" *ngFor="let post of posts let i=index">
             <div class="post-wrapper user-content">
-                <div class="avatar">
+                <div class="avatar" id="randImage">
+                    <img src="../assets/img/user-avatar/{{images[i]}}.png" alt="avatar" style="width:100%"/>
                 </div>
                 <h3>{{post.userName}}</h3>
                 <p>{{post.userFirstName}} {{post.userLastName}}</p>

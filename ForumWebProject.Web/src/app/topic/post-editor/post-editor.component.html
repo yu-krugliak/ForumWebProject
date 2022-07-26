@@ -10,7 +10,7 @@
         <mat-label style="color: white">
             {{!post?.id ? "Add a new post:)" : "Now you can edit your post:)"}}
         </mat-label>
-        <textarea [(ngModel)]="post!.text" id="new-post-text" matInput placeholder="Hello 👋"></textarea>
+        <textarea [(ngModel)]="post!.text" id="new-post-text" matInput placeholder="Hello 👋" required onkeyup="if(this.value.length > 0) document.getElementById('submit').disabled = false; else document.getElementById('submit').disabled = true;"></textarea>
     </mat-form-field>
     <div class="buttons">
         <button *ngIf="post?.id" mat-stroked-button id="stop-editing" (click)="stopEditing()">Cancel <mat-icon>close</mat-icon></button>

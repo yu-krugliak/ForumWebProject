@@ -35,7 +35,8 @@ namespace ForumWebProject.Api.Controllers
         [ProducesResponseType(typeof(PostView[]), 200)]
         public async Task<IActionResult> GetAllPostsByTopic(Guid id, [FromQuery] PaginationQuery query)
         {
-            return Ok(await _postService.GetAllPostsByTopicIdAndSliceAsync(id, query));
+            //return Ok(await _postService.GetAllPostsByTopicIdAndSliceAsync(id, query));
+            return Ok(await _postService.GetAllPostsByTopicIdAsync(id));
         }
         
         [HttpGet("byuser/{id}")]

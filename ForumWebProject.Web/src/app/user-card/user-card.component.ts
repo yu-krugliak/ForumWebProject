@@ -10,10 +10,13 @@ import { Component, OnInit } from '@angular/core';
 export class UserCardComponent implements OnInit {
 
   userInfo: UserView = {};
+  pictureNumber: number = 1;
+
   constructor(private usersService: UsersService) { }
 
   ngOnInit(): void {
     this.getUserInformation();
+    this.getRandomImageNumber();
   }
 
   getUserInformation() : void{
@@ -21,5 +24,9 @@ export class UserCardComponent implements OnInit {
       console.log(data);
       this.userInfo = data;
     }) 
+  }
+
+  getRandomImageNumber() {
+    this.pictureNumber = (Math.floor( Math.random() * 25)) + 1;
   }
 }

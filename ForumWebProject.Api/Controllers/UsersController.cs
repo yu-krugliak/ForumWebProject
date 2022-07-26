@@ -39,7 +39,7 @@ public class UsersController : ControllerBase
 
     [HttpGet("email/{email}")]
     [MustHavePermission(ForumAction.Find, ForumResource.Users)]
-    [ProducesResponseType(typeof(UserView[]), 200)]
+    [ProducesResponseType(typeof(UserView), 200)]
     public async Task<IActionResult> GetByEmail(string email)
     {
         return Ok(await _userService.GetUserByEmail(email));

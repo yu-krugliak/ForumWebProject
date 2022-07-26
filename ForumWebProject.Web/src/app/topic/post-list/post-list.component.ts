@@ -15,8 +15,8 @@ import { HasPermissionDirective } from 'src/app/directives/permission-directive'
 })
 export class PostListComponent implements OnInit {
   private _topicId!: string;
-
   protected post: PostView = {};
+  images: number[] = [];
 
   posts : PostView[] = [];
 
@@ -37,6 +37,8 @@ export class PostListComponent implements OnInit {
     this.postsService.apiPostsBytopicIdGet$Json({id: this._topicId}).subscribe((data: PostView[])=>{
       console.log(data);
       this.posts = data;
+      this.images =[];
+      this.getRandomImage();
     });
   }
 
@@ -121,6 +123,12 @@ export class PostListComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {duration: 3000});
+  }
+
+  getRandomImage(): void{
+    for(var i = 0; i < this.posts.length; i++){
+      this.images.push((Math.floor( Math.random() * 25)) + 1);
+    }
   }
 }
 
