@@ -59,6 +59,10 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
 
     BrowserModule, ReactiveFormsModule, MaterialModule, BrowserAnimationsModule, FormsModule
   ],
+
+  entryComponents: [
+    TopicStepperComponent
+  ],
   
   providers: [
     ApiInterceptor,

@@ -1,3 +1,4 @@
+import { TopicStepperComponent } from './../topic-stepper/topic-stepper.component';
 import { TopicRequest } from './../../api/models/topic-request';
 import { CategoryRequest } from './../../api/models/category-request';
 import { Category } from './../../api/models/category';
@@ -26,8 +27,9 @@ export default class HomeComponent implements OnInit {
    categories : Category[] = [];
    protected category: Category = {};
    protected addCatFlag: boolean = false;
-  //  protected topic: TopicView = {};
-  //  protected addTopicFlag: boolean = false;
+   protected topic: TopicView = {};
+   protected addTopicFlag: boolean = false;
+   protected confirmPost: boolean = false;
 
   constructor(private categoriesService: CategoriesService, private topicService: TopicService,
      private tokenService: TokenService, private dialog: MatDialog, private snackBar: MatSnackBar,
@@ -103,36 +105,45 @@ export default class HomeComponent implements OnInit {
     return topics;
   }
 
-  send() : void{
+  sendTopic() {
+    let request: TopicRequest = ({
+      name: this.topic.name,
+      description: this.topic.description,
+      categoryId: this.topic.categoryId,
+    });
+    console.log(request);
+    
+    if (!this.topic.id) {
+      this.addNewTopic(request);
+      this.addTopicFlag = false;
+    }
+    else {
+      this.editTopic(request);
+    }
 
-    // if(this.addTopicFlag){
-    //   this.sendTopic();
-    //   return;
-    // }
-    this.sendCategory();
+    this.confirmPost = false;
+    this.topic = {};
   }
 
-  // private sendTopic() {
-  //   let request: TopicRequest = ({
-  //     name: this.topic.name,
-  //     description: this.topic.description
-  //   });
+  private addNewTopic(request: TopicRequest) {
+    console.log(this.topic);
 
-  //   this.addNewTopic(request);
-  //   //this.topic = {};
-  //   this.addTopicFlag = false;
-  // }
+    this.topicService.apiTopicPost$Json({ body: request }).subscribe((data: TopicRequest) => {
+      console.log(data);
+      this.refresh();
+    });
+  }
 
-  // private addNewTopic(request: TopicRequest) {
-  //   console.log(this.topic);
+  private editTopic(request: TopicRequest) {
+    console.log(request);
 
-  //   this.topicService.apiTopicPost$Json({ body: request }).subscribe((data: TopicRequest) => {
-  //     console.log(data);
-  //     this.refresh();
-  //   });
-  // }
+    this.topicService.apiTopicTopicIdPut$Response({topicId: this.topic.id!, body:request}).subscribe(() => {
+      console.log("editing topic...");
+      this.refresh();
+    });
+  }
 
-  private sendCategory() {
+  sendCategory() {
     let request: CategoryRequest = ({
       name: this.category.name,
       description: this.category.description
@@ -173,9 +184,37 @@ export default class HomeComponent implements OnInit {
     this.smoothScrollToInput("stepper");
   }
 
-  // addTopic(){
-  //   this.addTopicFlag = true;
-  // }
+  addTopic(categoryId: string){
+    this.addTopicFlag = true;
+    this.topic.categoryId = categoryId;
+    this.managgingDialog();
+  }
+
+  editTopicButton(categoryId: string, topic: TopicView){
+    this.addTopicFlag = false;
+    this.topic.categoryId = categoryId;
+    this.topic = topic;
+    this.managgingDialog();
+  }
+
+  managgingDialog(){
+    const dialogRef = this.dialog.open(TopicStepperComponent, {
+      width: '450px',
+      data: {topic: this.topic, addTopicFlag: this.addTopicFlag, confirmPost: this.confirmPost},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The topic stepper was closed');
+      console.log(result);
+      this.topic = result.topic;
+      this.addTopicFlag = result.addTopicFlag;
+      this.confirmPost = result.confirmPost;
+
+      if(this.confirmPost){
+        this.sendTopic();
+      }
+    });
+  }
 
   edit(categoryToEdit: Category){
     this.smoothScrollToInput("stepper");
@@ -195,17 +234,25 @@ export default class HomeComponent implements OnInit {
     this.openSnackBar("Category has been deleted😢", "Thanks");
   }
 
-  // deleteTopic(topicIdToDelete: string){
-  //   this.topicService.apiTopicTopicIdDelete$Response({topicId: topicIdToDelete}).subscribe(() =>{
-  //     this.refresh();
-  //   });
+  deleteTopic(topicIdToDelete: string){
+    this.topicService.apiTopicTopicIdDelete$Response({topicId: topicIdToDelete}).subscribe(() =>{
+      this.refresh();
+    });
 
-  //   if(this.topic.id === topicIdToDelete){
-  //     this.topic = {};
-  //   }
+    if(this.topic.id === topicIdToDelete){
+      this.topic = {};
+    }
 
-  //   this.openSnackBar("Topic has been deleted😢", "Thanks");
-  // }
+    this.openSnackBar("Topic has been deleted😢", "Thanks");
+  }
+
+  openTopicDialog(enterAnimationDuration: string, exitAnimationDuration: string){
+    this.dialog.open(TopicStepperComponent, {
+      // width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
 
   smoothScrollToInput(elementId: string): void{
     this.viewPortScroller.scrollToAnchor(elementId);

@@ -32,14 +32,14 @@ export class CategoryStepperComponent implements OnInit {
   @Input() category: Category = {};
   @Input() addCatFlag: boolean = true;
 
-  @Output() send = new EventEmitter<void>();
+  @Output() sendCategory = new EventEmitter<void>();
 
   sendCategoryToParent() {
     this.category.name = this.firstFormGroup.controls["name"].value;
     this.category.description = this.secondFormGroup.controls["desc"].value;
     //this.addCatFlag = false;
 
-    this.send.emit();
+    this.sendCategory.emit();
   }
 
   stopEditing(){

@@ -4,5 +4,5 @@ export interface TopicRequest {
   description?: null | string;
   id?: string;
   name?: null | string;
-  parentCategoryId?: string;
+  categoryId?: string;
 }

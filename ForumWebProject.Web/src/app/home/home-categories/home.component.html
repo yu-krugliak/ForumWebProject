@@ -4,7 +4,7 @@
     <button mat-raised-button *hasPermission="'Permission.Categories.Create'" class="cat-add-button" (click)="addCategory()"><mat-icon>add</mat-icon><span></span></button>
 </div>
 
-<app-category-stepper *hasPermission="'Permission.Categories.Create'" (send)="send()" [category]="category" [addCatFlag]="addCatFlag"></app-category-stepper>
+<app-category-stepper *hasPermission="'Permission.Categories.Create'" (sendCategory)="sendCategory()" [category]="category" [addCatFlag]="addCatFlag"></app-category-stepper>
 
 <mat-accordion #homeaccordion="matAccordion" class="headers-align" multi>
   <mat-expansion-panel class="categories" *ngFor="let category of categories">
@@ -23,12 +23,9 @@
 
       <p class="full-description">
         {{category.description}}
-        <!-- <button mat-raised-button *hasPermission="'Permission.Topics.Create'" class="topic-add-button" (click)="addTopic()"><mat-icon>add</mat-icon><span></span></button> -->
-        <!-- <button mat-raised-button *hasPermission="'Permission.Topics.Delete'" class="topic-add-button" (click)="deleteTopic(topic.id!)"><mat-icon>delete</mat-icon><span></span></button> -->
+        <button mat-raised-button *hasPermission="'Permission.Topics.Create'" class="topic-add-button" (click)="addTopic(category.id!)">Add topic<span></span></button>
       </p>
-      <!-- <app-category-stepper *hasPermission="'Permission.Topics.Create'" *ngIf="topic.id===this.topic.id"  (send)="send()" [topic]="topic" [addTopicFlag]="addTopicFlag"></app-category-stepper> -->
 
-      
       <mat-card  *ngFor="let topic of category.topics" style="margin-top:11px;" class="topics">
           <mat-card-header>
               <mat-card-title>
@@ -42,6 +39,10 @@
                   {{topic.description}}
               </p>
           </mat-card-content>
+          <mat-card-actions>
+            <button *hasPermission="'Permission.Posts.Edit'" class="topic-button" (click)="editTopicButton(category.id!, topic)">Edit topic<span></span></button>
+            <button *hasPermission="'Permission.Posts.Delete'" class="topic-button" (click)="deleteTopic(topic.id!)">Delete topic<span></span></button>
+          </mat-card-actions>
       </mat-card>
 
   </mat-expansion-panel>

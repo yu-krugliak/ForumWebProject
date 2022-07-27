@@ -24,6 +24,8 @@ public static class MapsterConfiguration
             .IgnoreNullValues(false);
         
         config.ForType<TopicRequest, Topic>()
+            .Map(t => t.Id, tr => tr.Id)
+            .Map(t => t.CategoryId, tr => tr.CategoryId)
             .IgnoreNullValues(true);
         
         config.ForType<Post, PostView>()

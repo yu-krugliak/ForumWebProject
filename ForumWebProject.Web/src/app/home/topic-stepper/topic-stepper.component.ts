@@ -1,8 +1,10 @@
 import { TopicView } from './../../api/models/topic-view';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import { Category } from 'src/app/api/models/category';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { DialogData } from '../dialog-data';
 
 @Component({
   selector: 'app-topic-stepper',
@@ -24,49 +26,39 @@ export class TopicStepperComponent implements OnInit {
     desc: ['', Validators.required],
   });
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder, public dialogRef: MatDialogRef<TopicStepperComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   ngOnInit(): void {
   }
 
-  @Input() category: Category = {};
-  @Input() addCatFlag: boolean = false;
-  @Input() topic: TopicView = {};
-  @Input() addTopicFlag: boolean = false;
+  // @Input() topic: TopicView = {};
+  // @Input() addTopicFlag: boolean = false;
+  // @Input() confirmPost: boolean = false;
 
-  @Output() send = new EventEmitter<void>();
+  
+
+  // @Output() sendTopic = new EventEmitter<void>();
 
   sendPostToParent() {
+    // this.topic.name = this.firstFormGroup.controls["name"].value;
+    // this.topic.description = this.secondFormGroup.controls["desc"].value;
+    //this.addTopicFlag = false;
+    // this.dialogRef.close();
+    this.data.confirmPost = true;
 
-    if(this.addTopicFlag){
-      this.topic.name = this.firstFormGroup.controls["name"].value;
-      this.topic.description = this.secondFormGroup.controls["desc"].value;
-      this.send.emit();
-      return;
-    }
-
-    this.category.name = this.firstFormGroup.controls["name"].value;
-    this.category.description = this.secondFormGroup.controls["desc"].value;
-    this.addCatFlag = false;
-
-    this.send.emit();
+    this.dialogRef.close(this.data);
   }
 
   stopEditing(){
     console.log("STOP");
+    this.data.topic.id = undefined;
+    this.data.topic.name = undefined;
+    this.data.topic.description = undefined;
+    this.data.addTopicFlag = false;
+    this.data.confirmPost = false;
 
-    if(this.addTopicFlag){
-      this.topic.id = undefined;
-      this.topic.name = undefined;
-      this.topic.description = undefined;
-      this.addTopicFlag = false;
-      return;
-    }
-
-    this.category.id = undefined;
-    this.category.name = undefined;
-    this.category.description = undefined;
-    this.addCatFlag = false;
+    this.dialogRef.close(this.data);
   }
 }
 

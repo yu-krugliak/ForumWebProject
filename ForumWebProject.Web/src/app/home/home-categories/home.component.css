@@ -137,3 +137,22 @@ mat-card button.topic-link{
 mat-card button.topic-link:hover{
   color: #9f29d2;
 }
+
+.topic-button{
+  padding: 6px 20px;
+  color: var(--dark-secondary-font);
+  background-color: rgba(67, 66, 66, 1);
+  border: solid 2px var(--dark-border);
+  border-radius: 3px;
+  font-size: 11px;
+  margin: 2px;
+}
+
+.topic-button *{
+  /* margin: auto 0; */
+  vertical-align: middle;
+}
+
+.topic-button:hover{
+  background-color: var(--dark-border);
+}

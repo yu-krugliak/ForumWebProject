@@ -85,7 +85,8 @@ namespace ForumWebProject.Application.Services.Implementations
 
         public async Task UpdateTopicAsync(Guid topicId, TopicRequest topicRequest)
         {
-            var topic = await GetExistingEntityById(topicId);
+            //var topic = await GetExistingEntityById(topicId);
+            var topic = await _topicRepository.GetByIdAsync(topicId);
             _mapper.Map(topicRequest, topic);
 
             var result = await _topicRepository.UpdateAsync(topic);
