@@ -41,6 +41,7 @@ public static class ForumPermissions
         new(ForumAction.Read, ForumResource.Categories),
         
         new(ForumAction.Read, ForumResource.Topics),
+        new(ForumAction.Create, ForumResource.Topics),
 
         new(ForumAction.Read, ForumResource.Posts),
         new(ForumAction.Create, ForumResource.Posts),

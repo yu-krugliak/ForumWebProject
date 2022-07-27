@@ -40,8 +40,8 @@
               </p>
           </mat-card-content>
           <mat-card-actions>
-            <button *hasPermission="'Permission.Posts.Edit'" class="topic-button" (click)="editTopicButton(category.id!, topic)">Edit topic<span></span></button>
-            <button *hasPermission="'Permission.Posts.Delete'" class="topic-button" (click)="deleteTopic(topic.id!)">Delete topic<span></span></button>
+            <button *hasPermission="'Permission.Topics.Edit'" class="topic-button" (click)="editTopicButton(category.id!, topic)">Edit topic<span></span></button>
+            <button *hasPermission="'Permission.Topics.Delete'" class="topic-button" (click)="deleteTopic(topic.id!)">Delete topic<span></span></button>
           </mat-card-actions>
       </mat-card>
 
